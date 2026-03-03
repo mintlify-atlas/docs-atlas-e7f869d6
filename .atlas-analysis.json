@@ -1,0 +1,107 @@
+{
+  "projectType": "ai-ml",
+  "projectName": "XAUUSD Trading Assistant AI",
+  "projectDescription": "An AI-powered algorithmic trading system for Gold (XAUUSD) using multi-timeframe technical analysis, LangChain, and real-time MetaTrader 5 integration.",
+  "theme": "aspen",
+  "primaryColor": "#D4AF37",
+  "lightColor": "#F4E4C1",
+  "darkColor": "#8B7355",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "installation"
+            ]
+          },
+          {
+            "group": "Core Concepts",
+            "pages": [
+              "concepts/architecture",
+              "concepts/multi-timeframe-analysis",
+              "concepts/ai-decision-engine",
+              "concepts/risk-management"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "guides/setup-metatrader",
+              "guides/configure-groq",
+              "guides/running-bot",
+              "guides/dashboard-usage",
+              "guides/interpreting-signals"
+            ]
+          },
+          {
+            "group": "Technical Indicators",
+            "pages": [
+              "indicators/overview",
+              "indicators/rsi",
+              "indicators/ema",
+              "indicators/atr",
+              "indicators/order-blocks",
+              "indicators/fair-value-gaps"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Core Components",
+            "pages": [
+              "api/trading-bot",
+              "api/streamlit-app"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "api/environment-variables",
+              "api/timeframes"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Resources",
+        "groups": [
+          {
+            "group": "Additional Resources",
+            "pages": [
+              "resources/faq",
+              "resources/troubleshooting",
+              "resources/disclaimer",
+              "resources/contributing"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Multi-timeframe technical analysis (D1, H4, H1, M30, M15, M5)",
+    "AI-powered trade signal generation using Groq LLM and LangChain",
+    "Real-time market data integration via MetaTrader 5",
+    "Comprehensive technical indicators (RSI, EMA, ATR, Order Blocks, Fair Value Gaps)",
+    "Interactive Streamlit web dashboard with auto-refresh",
+    "Automated risk management with 1% per trade protocol",
+    "Supply and demand zone identification",
+    "Dynamic stop-loss calculation using ATR"
+  ],
+  "publicApiSurface": [
+    "XAUUSDTradingBot(api_key: str)",
+    "XAUUSDTradingBot.run_analysis() -> dict",
+    "streamlit run app.py",
+    "Technical Features: RSI, EMA, ATR, Order Blocks, FVG",
+    "Timeframes: D1, H4, H1, M30, M15, M5",
+    "Environment: GROQ_API_KEY"
+  ]
+}
