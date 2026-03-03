@@ -1,0 +1,410 @@
+---
+title: 'Dashboard Usage'
+description: 'Complete guide to using the Streamlit dashboard features and controls'
+---
+
+## Dashboard Overview
+
+The XAUUSD Trading Bot dashboard provides a comprehensive interface for market analysis and trade signal generation. Built with Streamlit, it offers real-time data visualization and AI-powered insights.
+
+<Note>
+  The dashboard uses a wide layout optimized for viewing multi-timeframe analysis side-by-side.
+</Note>
+
+## Interface Layout
+
+The dashboard is organized into three main sections:
+
+```
+┌─────────────────┬──────────────────────────────────┐
+│   SIDEBAR       │      MAIN CONTENT AREA           │
+│                 │                                  │
+│ Control Panel   │  📊 Analysis | 🎯 Trading Signal │
+│ - Run Analysis  │                                  │
+│ - Auto Refresh  │  [Tab Content]                   │
+│ - Metrics       │                                  │
+│ - Last Update   │                                  │
+└─────────────────┴──────────────────────────────────┘
+```
+
+## Control Panel (Sidebar)
+
+The sidebar contains all controls for bot operation.
+
+### Run New Analysis Button
+
+Location: `app.py:57`
+
+```python
+if st.button("📈 Run New Analysis"):
+    with st.spinner("Analyzing market data..."):
+        st.session_state['analysis_result'] = bot.run_analysis()
+        st.session_state['last_update'] = datetime.now()
+```
+
+**Function**: Triggers a complete market analysis
+
+**Process**:
+1. Fetches XAUUSD data from MetaTrader 5 across 6 timeframes
+2. Calculates technical indicators (RSI, EMA, ATR)
+3. Sends data to Groq LLM for AI analysis
+4. Generates trading signals
+5. Updates dashboard with results
+
+**When to use**: 
+- On first launch
+- When you want fresh market analysis
+- Before making trading decisions
+- After significant market events
+
+<Note>
+  Analysis typically takes 10-30 seconds depending on your internet connection and Groq API response time.
+</Note>
+
+### Auto Refresh Toggle
+
+Location: `app.py:55`
+
+```python
+auto_refresh = st.toggle("🔄 Auto Refresh (30min)", value=False)
+```
+
+**Function**: Enables automatic analysis every 30 minutes
+
+**Features**:
+- Visual progress bar showing time until next refresh
+- Countdown timer (MM:SS format)
+- Automatic re-analysis without manual intervention
+
+<Steps>
+  <Step title="Enable Auto Refresh">
+    Click the toggle switch in the sidebar to activate auto-refresh mode.
+  </Step>
+  
+  <Step title="Monitor Progress">
+    A progress bar appears showing:
+    ```
+    [████████░░░░░░░░] Next refresh in: 18:45
+    ```
+    
+    The bar fills over 30 minutes, then automatically triggers new analysis.
+  </Step>
+  
+  <Step title="Automatic Update">
+    When the timer reaches 00:00:
+    - New analysis runs automatically
+    - Dashboard updates with fresh data
+    - Timer resets to 30:00
+  </Step>
+</Steps>
+
+**Implementation** (`app.py:97-115`):
+
+```python
+if auto_refresh:
+    current_time = datetime.now()
+    if 'last_refresh' not in st.session_state:
+        st.session_state['last_refresh'] = current_time
+    
+    time_diff = (current_time - st.session_state['last_refresh']).total_seconds()
+    remaining_time = 1800 - time_diff  # 1800 seconds = 30 minutes
+    
+    if remaining_time > 0:
+        progress = (1800 - remaining_time) / 1800
+        mins = int(remaining_time // 60)
+        secs = int(remaining_time % 60)
+        st.sidebar.progress(progress, text=f"Next refresh in: {mins:02d}:{secs:02d}")
+```
+
+<Warning>
+  Auto-refresh increases Groq API usage. Monitor your API limits if using the free tier.
+</Warning>
+
+### Current Spread Metric
+
+Location: `app.py:71-72`
+
+```python
+if result.get('current_spread'):
+    st.sidebar.metric("Current Spread", f"{result['current_spread']} points")
+```
+
+**Display**: Shows the current bid-ask spread for XAUUSD
+
+**Importance**: 
+- Lower spreads = better entry conditions
+- High spreads = avoid trading (increased cost)
+- Typical XAUUSD spread: 20-50 points
+
+### Last Update Timestamp
+
+Location: `app.py:92`
+
+```python
+st.sidebar.info(f"Last Updated: {st.session_state['last_update'].strftime('%Y-%m-%d %H:%M:%S')}")
+```
+
+**Display**: Shows when the current analysis was generated
+
+**Format**: `YYYY-MM-DD HH:MM:SS`
+
+**Example**: `2026-03-03 14:32:15`
+
+## Main Content Tabs
+
+The dashboard uses a tabbed interface for organized data presentation.
+
+Location: `app.py:65`
+
+```python
+tab1, tab2 = st.tabs(["📊 Analysis", "🎯 Trading Signal"])
+```
+
+### Tab 1: 📊 Analysis
+
+Displays comprehensive technical analysis and market data.
+
+#### Technical Analysis Section
+
+Location: `app.py:76-77`
+
+```python
+st.markdown("### 📊 Technical Analysis")
+st.markdown(format_signal(result['technical_features']))
+```
+
+**Content**: AI-generated analysis of:
+- RSI (Relative Strength Index) values
+- EMA (Exponential Moving Average) trends
+- ATR (Average True Range) volatility
+- Market structure (bullish/bearish)
+- Key support and resistance levels
+
+#### Market Data by Timeframe
+
+Location: `app.py:79-84`
+
+```python
+st.markdown("### 📈 Market Data by Timeframe")
+cols = st.columns(2)
+for idx, (tf, data) in enumerate(result['market_data'].items()):
+    with cols[idx % 2]:
+        display_market_data(data, tf)
+```
+
+**Layout**: Two-column grid displaying 6 timeframes
+
+**Timeframes analyzed**:
+- **D1** (Daily) - Long-term trend
+- **H4** (4-Hour) - Swing trading context
+- **H1** (1-Hour) - Intraday direction
+- **M30** (30-Minute) - Entry timing
+- **M15** (15-Minute) - Precise entries
+- **M5** (5-Minute) - Scalping reference
+
+**Data Display Format** (`app.py:12-18`):
+
+```python
+def display_market_data(data_str, timeframe):
+    """Display formatted market data in an expander"""
+    with st.expander(f"📊 {timeframe} Market Data", expanded=False):
+        lines = data_str.split('\n')
+        for line in lines:
+            if line.strip():
+                st.text(line)
+```
+
+Each timeframe is collapsible (expander) containing:
+- OHLC data (Open, High, Low, Close)
+- Volume
+- Technical indicator values
+- Price patterns
+
+<Note>
+  Click on any timeframe expander to view detailed market data. All expanders are collapsed by default for clean presentation.
+</Note>
+
+### Tab 2: 🎯 Trading Signal
+
+Displays AI-generated trading recommendations.
+
+Location: `app.py:86-89`
+
+```python
+with tab2:
+    st.markdown("### 🎯 Trading Signal")
+    st.markdown(format_signal(result['trading_signal']))
+```
+
+**Content includes**:
+- Trade direction (BUY/SELL)
+- Entry price
+- Stop-loss level
+- Take-profit target(s)
+- Risk-reward ratio
+- Position sizing (based on 1% risk)
+- Trade reasoning/confluence factors
+
+**Signal Formatting** (`app.py:20-24`):
+
+```python
+def format_signal(signal_content):
+    """Format and display trading signal content"""
+    if isinstance(signal_content, str):
+        return signal_content
+    return signal_content.content if hasattr(signal_content, 'content') else str(signal_content)
+```
+
+## Custom Styling
+
+The dashboard uses custom CSS for enhanced visuals.
+
+Location: `app.py:28-47`
+
+```python
+st.markdown("""
+    <style>
+    .stApp {background-color: #0e1117}
+    .metric-container {
+        background-color: #1f2937;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 5px;
+    }
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 2px;
+        background-color: #1f2937;
+    }
+    .stTabs [data-baseweb="tab"] {
+        background-color: #374151;
+        padding: 10px 20px;
+        border-radius: 5px 5px 0 0;
+    }
+    </style>
+""", unsafe_allow_html=True)
+```
+
+**Features**:
+- Dark theme optimized for trading
+- Rounded corners on UI elements
+- Consistent color scheme
+- Professional appearance
+
+## Session State Management
+
+The dashboard maintains state across interactions:
+
+```python
+st.session_state['analysis_result']  # Stores latest analysis
+st.session_state['last_update']      # Timestamp of last analysis
+st.session_state['last_refresh']     # Auto-refresh timer reference
+```
+
+**Benefits**:
+- Results persist when toggling tabs
+- Auto-refresh timer maintains state
+- No data loss on interaction
+
+## No Analysis State
+
+Location: `app.py:94`
+
+```python
+else:
+    st.warning("⚠️ No analysis results yet. Click 'Run Analysis' to start.")
+```
+
+On first launch, a warning prompts you to run initial analysis.
+
+## Error Handling
+
+Location: `app.py:117-118`
+
+```python
+except Exception as e:
+    st.error(f"Error: {str(e)}")
+```
+
+Any errors during operation display as red error messages with details.
+
+## Workflow Example
+
+<Steps>
+  <Step title="Launch Dashboard">
+    Run `streamlit run app.py` and access `http://localhost:8501`
+  </Step>
+  
+  <Step title="Initial Setup">
+    - Ensure MT5 is running and logged in
+    - Verify Groq API key is configured
+    - Dashboard shows "No analysis results yet" warning
+  </Step>
+  
+  <Step title="Run First Analysis">
+    Click **📈 Run New Analysis** button
+    - Spinner shows "Analyzing market data..."
+    - Wait 10-30 seconds for completion
+  </Step>
+  
+  <Step title="Review Technical Analysis">
+    In **📊 Analysis** tab:
+    - Read AI technical analysis summary
+    - Expand timeframe data to see details
+    - Check multiple timeframes for confluence
+  </Step>
+  
+  <Step title="Check Trading Signal">
+    Switch to **🎯 Trading Signal** tab:
+    - Review trade direction and entry
+    - Note stop-loss and take-profit levels
+    - Assess risk-reward ratio
+  </Step>
+  
+  <Step title="Monitor Spread">
+    Check **Current Spread** in sidebar:
+    - Low spread = good entry timing
+    - High spread = wait for better conditions
+  </Step>
+  
+  <Step title="Enable Auto-Refresh (Optional)">
+    Toggle **🔄 Auto Refresh**:
+    - Dashboard updates every 30 minutes
+    - Monitor progress bar countdown
+    - Keep browser tab open
+  </Step>
+</Steps>
+
+## Tips and Best Practices
+
+<Accordion title="Optimal Dashboard Usage">
+  - Run new analysis during active market hours (London/New York sessions)
+  - Check multiple timeframe confluence before trading
+  - Use auto-refresh for swing trading (30-min updates sufficient)
+  - Disable auto-refresh if actively scalping (run manual analysis as needed)
+  - Keep MT5 running continuously for uninterrupted data
+</Accordion>
+
+<Accordion title="Performance Optimization">
+  - Close unused browser tabs to reduce resource usage
+  - Clear browser cache if dashboard becomes slow
+  - Restart Streamlit periodically for long-running sessions
+  - Monitor memory usage if running 24/7
+</Accordion>
+
+<Accordion title="Data Interpretation">
+  - Higher timeframes (D1, H4) = overall trend
+  - Lower timeframes (M15, M5) = precise entry timing
+  - Look for alignment across timeframes (confluence)
+  - RSI > 70 = overbought, RSI < 30 = oversold
+  - ATR indicates volatility (higher = larger stop-loss needed)
+</Accordion>
+
+## Next Steps
+
+- [Learn to interpret trading signals](/guides/interpreting-signals)
+- Explore advanced signal analysis
+- Understand risk management protocols
+
+<Warning>
+  **Trading Disclaimer**: The dashboard provides analysis tools, but final trading decisions are your responsibility. Always verify signals and manage risk appropriately. 65% accuracy means 35% of signals may result in losses.
+</Warning>

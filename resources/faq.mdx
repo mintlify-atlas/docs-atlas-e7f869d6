@@ -1,0 +1,187 @@
+---
+title: 'Frequently Asked Questions'
+description: 'Common questions about the XAUUSD Trading Assistant AI'
+---
+
+## General Questions
+
+<AccordionGroup>
+  <Accordion title="What is the XAUUSD Trading Assistant AI?">
+    The XAUUSD Trading Assistant AI is an advanced algorithmic trading system for Gold (XAUUSD) that uses multi-timeframe analysis and AI-powered decision making. It integrates with MetaTrader 5 and uses Groq LLM for intelligent trade signal generation.
+    
+    The system has achieved 65% accuracy for profitable trades when tested on real accounts.
+  </Accordion>
+
+  <Accordion title="What makes this trading bot different?">
+    This bot combines:
+    - **Multi-timeframe analysis** across D1, H4, H1, M30, M15, and M5
+    - **AI-powered insights** using Groq LLM for trade signal generation
+    - **Advanced technical analysis** including order blocks, Fair Value Gaps (FVG), and supply/demand zones
+    - **Comprehensive risk management** with 1% per trade and dynamic ATR-based stop-loss
+    - **Interactive dashboard** built with Streamlit for real-time monitoring
+  </Accordion>
+
+  <Accordion title="Is this bot suitable for beginners?">
+    While the bot is designed to assist traders of all levels, it's recommended that users have:
+    - Basic understanding of forex/gold trading
+    - Familiarity with MetaTrader 5
+    - Knowledge of risk management principles
+    - Understanding that this is an educational tool, not a guaranteed profit system
+    
+    <Note>
+      This bot is for educational purposes only. Always verify signals and understand the trading decisions before executing them.
+    </Note>
+  </Accordion>
+</AccordionGroup>
+
+## Setup Questions
+
+<AccordionGroup>
+  <Accordion title="What do I need to get started?">
+    **System Requirements:**
+    - Python 3.8 or higher
+    - MetaTrader 5 with an active account
+    - Groq API key (free or paid tier)
+    - Stable internet connection
+    
+    **Required Knowledge:**
+    - Basic Python skills (for installation)
+    - Understanding of trading concepts
+    - MetaTrader 5 account setup
+  </Accordion>
+
+  <Accordion title="How do I get a Groq API key?">
+    1. Visit [Groq Console](https://console.groq.com)
+    2. Sign up for a free account
+    3. Navigate to API Keys section
+    4. Generate a new API key
+    5. Copy the key and add it to `.streamlit/secrets.toml`
+    
+    <Info>
+      Groq offers a free tier that's sufficient for most trading operations. Keep your API key secure and never share it publicly.
+    </Info>
+  </Accordion>
+
+  <Accordion title="Which MetaTrader 5 account types are supported?">
+    The bot works with:
+    - Demo accounts (recommended for testing)
+    - Live accounts (use with caution)
+    - Both ECN and standard account types
+    
+    <Warning>
+      Always test the bot thoroughly on a demo account before using it with real funds.
+    </Warning>
+  </Accordion>
+</AccordionGroup>
+
+## Usage Questions
+
+<AccordionGroup>
+  <Accordion title="How accurate are the trading signals?">
+    The bot has demonstrated **65% accuracy** for profitable trades in real account testing. However:
+    - Past performance does not guarantee future results
+    - Market conditions constantly change
+    - Accuracy may vary based on market volatility
+    - Proper risk management is essential
+    
+    <Warning>
+      No trading system can guarantee profits. Always use proper risk management and never trade with money you can't afford to lose.
+    </Warning>
+  </Accordion>
+
+  <Accordion title="What timeframes should I focus on?">
+    The bot analyzes six timeframes:
+    - **D1 (Daily)**: Long-term trend identification
+    - **H4 (4-Hour)**: Intermediate trend confirmation
+    - **H1 (1-Hour)**: Entry zone refinement
+    - **M30 (30-Minute)**: Fine-tuning entries
+    - **M15 (15-Minute)**: Precise entry timing
+    - **M5 (5-Minute)**: Micro-level confirmation
+    
+    <Info>
+      The bot uses multi-timeframe confluence, meaning it looks for agreement across multiple timeframes for stronger signals.
+    </Info>
+  </Accordion>
+
+  <Accordion title="Can I customize the risk management settings?">
+    Yes! The bot includes:
+    - Default 1% risk per trade
+    - Dynamic stop-loss calculated using ATR (Average True Range)
+    - Customizable position sizing
+    - Risk-reward ratio adjustments
+    
+    You can modify these settings in the `XAUSD_AI.py` file, but ensure you understand the implications of any changes.
+  </Accordion>
+
+  <Accordion title="How often should I run the analysis?">
+    The Streamlit dashboard includes an auto-refresh feature. Recommended intervals:
+    - **Scalpers**: Every 5-15 minutes
+    - **Day traders**: Every 30-60 minutes
+    - **Swing traders**: Every 4 hours
+    
+    <Note>
+      More frequent analysis doesn't necessarily lead to better trades. Quality over quantity is key in trading.
+    </Note>
+  </Accordion>
+</AccordionGroup>
+
+## Technical Questions
+
+<AccordionGroup>
+  <Accordion title="What technical indicators does the bot use?">
+    The bot incorporates:
+    - **RSI (Relative Strength Index)**: Overbought/oversold conditions
+    - **EMA (Exponential Moving Average)**: Trend direction
+    - **ATR (Average True Range)**: Volatility and stop-loss calculation
+    - **Order Blocks**: Institutional buying/selling zones
+    - **Fair Value Gaps (FVG)**: Price imbalances
+    - **Supply and Demand Zones**: Key support/resistance areas
+  </Accordion>
+
+  <Accordion title="Can I integrate this with other trading platforms?">
+    Currently, the bot is designed specifically for MetaTrader 5. Integration with other platforms would require:
+    - Modifying the data connection logic
+    - Adapting to different API structures
+    - Testing compatibility
+    
+    Community contributions for other platform integrations are welcome!
+  </Accordion>
+
+  <Accordion title="How does the AI component work?">
+    The bot uses LangChain with Groq LLM to:
+    1. Analyze technical indicator data from all timeframes
+    2. Identify patterns and confluences
+    3. Generate trading signals with reasoning
+    4. Provide risk assessment for each trade
+    
+    The AI serves as a decision support system, not an autonomous trader.
+  </Accordion>
+</AccordionGroup>
+
+## Support Questions
+
+<AccordionGroup>
+  <Accordion title="Where can I get help if I encounter issues?">
+    - Check the [Troubleshooting](/resources/troubleshooting) page
+    - Review the project's GitHub issues
+    - Join the community discussions
+    - Read the documentation thoroughly
+  </Accordion>
+
+  <Accordion title="Can I contribute to the project?">
+    Absolutely! See the [Contributing Guidelines](/resources/contributing) for information on:
+    - How to submit improvements
+    - Coding standards
+    - Testing requirements
+    - Documentation guidelines
+  </Accordion>
+
+  <Accordion title="Is there an updated version available?">
+    Yes! An updated version with enhanced features is available at:
+    [XAUUSD Trading Deep Agent using LangChain](https://github.com/codebytemirza/xauusd_trading_deepagent_using_langchain.git)
+    
+    <Info>
+      AI Automation and Agent Developer services are also available for custom implementations.
+    </Info>
+  </Accordion>
+</AccordionGroup>

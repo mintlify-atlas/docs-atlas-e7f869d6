@@ -1,0 +1,144 @@
+---
+title: 'MetaTrader 5 Setup'
+description: 'Complete guide to installing and configuring MetaTrader 5 for the XAUUSD Trading Bot'
+---
+
+## Overview
+
+The XAUUSD Trading Bot requires MetaTrader 5 (MT5) to access real-time market data and execute trades. This guide walks you through the complete installation and configuration process.
+
+<Warning>
+  MetaTrader 5 is required for the bot to function. The bot uses the MT5 Python API to fetch market data across multiple timeframes (D1, H4, H1, M30, M15, M5).
+</Warning>
+
+## Installation Steps
+
+<Steps>
+  <Step title="Download MetaTrader 5">
+    Visit the official MetaTrader 5 website or your broker's platform to download MT5 for your operating system:
+    
+    - **Windows**: Download the installer from [MetaTrader 5](https://www.metatrader5.com/)
+    - **macOS**: Use Wine or a Windows VM
+    - **Linux**: Use Wine compatibility layer
+  </Step>
+
+  <Step title="Install MetaTrader 5">
+    Run the installer and follow the on-screen instructions:
+    
+    1. Accept the license agreement
+    2. Choose installation directory
+    3. Wait for installation to complete
+    4. Launch MetaTrader 5
+  </Step>
+
+  <Step title="Create or Login to Trading Account">
+    When MT5 launches for the first time:
+    
+    - **New users**: Create a demo account to test the bot
+    - **Existing users**: Login with your broker credentials
+    
+    <Note>
+      For testing purposes, a demo account is recommended. The bot has been tested with 65% accuracy on real accounts.
+    </Note>
+  </Step>
+
+  <Step title="Enable Algo Trading">
+    To allow the Python API to connect:
+    
+    1. Open MT5 and go to **Tools** → **Options**
+    2. Navigate to the **Expert Advisors** tab
+    3. Check the following options:
+       - ✅ Allow algorithmic trading
+       - ✅ Allow DLL imports
+       - ✅ Allow WebRequest for listed URL
+    4. Click **OK** to save
+  </Step>
+
+  <Step title="Install Python MT5 Package">
+    Install the MetaTrader5 Python package:
+    
+    ```bash
+    pip install MetaTrader5
+    ```
+    
+    This package is required for the bot to communicate with MT5.
+  </Step>
+
+  <Step title="Verify Connection">
+    Test the connection by running this Python code:
+    
+    ```python
+    import MetaTrader5 as mt5
+    
+    # Initialize MT5 connection
+    if mt5.initialize():
+        print("MetaTrader 5 connected successfully!")
+        print(f"Version: {mt5.version()}")
+        mt5.shutdown()
+    else:
+        print("Failed to connect to MetaTrader 5")
+    ```
+    
+    If successful, you'll see the MT5 version number.
+  </Step>
+</Steps>
+
+## Common Issues
+
+<Accordion title="Connection Failed Error">
+  If you see a connection failed error:
+  
+  1. Ensure MT5 is running and logged in
+  2. Check that algorithmic trading is enabled
+  3. Restart both MT5 and your Python script
+  4. Verify you're using a 64-bit Python installation (matches MT5)
+</Accordion>
+
+<Accordion title="Symbol 'XAUUSD' Not Found">
+  If the bot can't find the XAUUSD symbol:
+  
+  1. Open MT5's **Market Watch** (Ctrl+M)
+  2. Right-click and select **Show All**
+  3. Find and enable **XAUUSD** (Gold vs US Dollar)
+  4. Some brokers use different naming: **GOLD**, **XAU/USD**, or **XAUUSD.m**
+  
+  <Note>
+    You may need to modify the symbol name in the bot's code to match your broker's naming convention.
+  </Note>
+</Accordion>
+
+<Accordion title="Linux/macOS Installation">
+  For non-Windows systems:
+  
+  1. Install Wine: `sudo apt install wine` (Ubuntu/Debian)
+  2. Download Windows MT5 installer
+  3. Run via Wine: `wine mt5setup.exe`
+  4. Use Wine prefix when running the bot
+  
+  Alternatively, use a Windows VM or VPS for better stability.
+</Accordion>
+
+## Trading Account Configuration
+
+### Recommended Settings for XAUUSD
+
+<Note>
+  The bot analyzes XAUUSD across 6 timeframes: Daily (D1), 4-Hour (H4), 1-Hour (H1), 30-Minute (M30), 15-Minute (M15), and 5-Minute (M5).
+</Note>
+
+1. **Leverage**: 1:100 or higher (for gold trading)
+2. **Minimum Balance**: $1000+ recommended (bot uses 1% risk per trade)
+3. **Spread**: Choose a broker with competitive XAUUSD spreads
+4. **Execution**: Market execution preferred
+
+## Next Steps
+
+Once MetaTrader 5 is configured:
+
+1. [Configure your Groq API key](/guides/configure-groq)
+2. [Run the trading bot](/guides/running-bot)
+3. [Learn to use the dashboard](/guides/dashboard-usage)
+
+<Warning>
+  **Risk Disclaimer**: This bot is for educational purposes only. Trading involves substantial risk of loss. Always verify signals and manage risk appropriately.
+</Warning>

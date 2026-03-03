@@ -1,0 +1,336 @@
+---
+title: Installation
+description: Complete installation guide for the XAUUSD Trading Assistant AI
+---
+
+# Installation Guide
+
+This guide provides comprehensive installation instructions for the XAUUSD Trading Assistant AI on Windows, macOS, and Linux.
+
+## System Requirements
+
+### Minimum Requirements
+
+- **Operating System**: Windows 10+, macOS 10.14+, or Linux (Ubuntu 20.04+)
+- **Python**: Version 3.8 or higher
+- **RAM**: 4GB minimum (8GB recommended)
+- **Storage**: 500MB free space
+- **Internet**: Stable connection for API calls and market data
+
+### Required Accounts
+
+- **MetaTrader 5 Account**: Live or demo trading account
+- **Groq API Key**: Free tier available at [console.groq.com](https://console.groq.com)
+
+<Info>
+  The bot works with both live and demo MetaTrader 5 accounts. We recommend starting with a demo account for testing.
+</Info>
+
+## Step 1: Install Python
+
+<Tabs>
+  <Tab title="Windows">
+    1. Download Python from [python.org](https://python.org/downloads)
+    2. Run the installer
+    3. **Important**: Check "Add Python to PATH" during installation
+    4. Verify installation:
+
+    ```bash
+    python --version
+    ```
+
+    Should output `Python 3.8.x` or higher.
+  </Tab>
+
+  <Tab title="macOS">
+    Using Homebrew (recommended):
+
+    ```bash
+    brew install python@3.11
+    ```
+
+    Or download from [python.org](https://python.org/downloads).
+
+    Verify installation:
+
+    ```bash
+    python3 --version
+    ```
+  </Tab>
+
+  <Tab title="Linux">
+    Most Linux distributions include Python. Update to 3.8+:
+
+    ```bash
+    sudo apt update
+    sudo apt install python3.11 python3-pip
+    ```
+
+    Verify installation:
+
+    ```bash
+    python3 --version
+    ```
+  </Tab>
+</Tabs>
+
+## Step 2: Install MetaTrader 5
+
+<Steps>
+  <Step title="Download MetaTrader 5">
+    Download from [metatrader5.com](https://www.metatrader5.com/en/download) or your broker's website.
+
+    <Note>
+      Some brokers provide custom MT5 builds. Use your broker's version if available.
+    </Note>
+  </Step>
+
+  <Step title="Install and Configure">
+    1. Run the MetaTrader 5 installer
+    2. Complete the installation wizard
+    3. Launch MT5 and log in with your trading account credentials
+    4. Go to **Tools → Options → Expert Advisors**
+    5. Enable these options:
+       - ✅ Allow automated trading
+       - ✅ Allow DLL imports
+       - ✅ Allow WebRequests for listed URLs (add your broker's URL)
+  </Step>
+
+  <Step title="Verify Connection">
+    - Check the connection status in the bottom-right corner (should show green bars)
+    - Ensure XAUUSD is available in the Market Watch
+    - Right-click Market Watch → Symbols → Search for "XAUUSD" or "Gold"
+  </Step>
+</Steps>
+
+See the [MetaTrader Setup Guide](/guides/setup-metatrader) for detailed configuration.
+
+## Step 3: Clone the Repository
+
+Clone the XAUUSD Trading Assistant AI repository:
+
+```bash
+git clone https://github.com/codebytemirza/XAUUSD_TRADING_ASISTENT_AI.git
+cd XAUUSD_TRADING_ASISTENT_AI
+```
+
+<Tip>
+  If you don't have Git installed, download the repository as a ZIP file from GitHub and extract it.
+</Tip>
+
+## Step 4: Install Python Dependencies
+
+Install required packages using pip:
+
+<CodeGroup>
+  ```bash Individual Packages
+  pip install MetaTrader5 pandas numpy langchain-groq streamlit
+  ```
+
+  ```bash Using requirements.txt
+  pip install -r requirements.txt
+  ```
+
+  ```bash Virtual Environment (Recommended)
+  # Create virtual environment
+  python -m venv venv
+
+  # Activate (Windows)
+  venv\Scripts\activate
+
+  # Activate (macOS/Linux)
+  source venv/bin/activate
+
+  # Install packages
+  pip install -r requirements.txt
+  ```
+</CodeGroup>
+
+### Required Packages
+
+- **MetaTrader5**: Python integration for MT5
+- **pandas**: Data manipulation and analysis
+- **numpy**: Numerical computing
+- **langchain-groq**: LangChain integration for Groq LLM
+- **streamlit**: Web dashboard framework
+
+<Warning>
+  If you encounter installation errors with MetaTrader5, ensure you have Visual C++ Redistributables installed on Windows.
+</Warning>
+
+## Step 5: Configure Groq API
+
+<Steps>
+  <Step title="Get Your API Key">
+    1. Visit [console.groq.com](https://console.groq.com)
+    2. Sign up or log in
+    3. Navigate to API Keys section
+    4. Click **Create API Key**
+    5. Copy your API key
+
+    See the [Groq Configuration Guide](/guides/configure-groq) for detailed instructions.
+  </Step>
+
+  <Step title="Create Secrets File">
+    Create the `.streamlit` directory and `secrets.toml` file:
+
+    ```bash
+    mkdir -p .streamlit
+    ```
+
+    Create `.streamlit/secrets.toml` with your API key:
+
+    ```toml .streamlit/secrets.toml
+    GROQ_API_KEY = "gsk_your_actual_api_key_here"
+    ```
+  </Step>
+
+  <Step title="Secure Your API Key">
+    Add `.streamlit/` to your `.gitignore` to prevent committing secrets:
+
+    ```bash .gitignore
+    .streamlit/
+    secrets.toml
+    *.env
+    ```
+
+    <Warning>
+      Never commit API keys to version control. Keep your `secrets.toml` file private.
+    </Warning>
+  </Step>
+</Steps>
+
+## Step 6: Verify Installation
+
+Test your installation by starting the dashboard:
+
+```bash
+streamlit run app.py
+```
+
+You should see:
+
+```
+You can now view your Streamlit app in your browser.
+
+Local URL: http://localhost:8501
+Network URL: http://192.168.x.x:8501
+```
+
+Open the local URL in your browser. If the dashboard loads successfully, installation is complete!
+
+<Tip>
+  If the dashboard doesn't load, check the [Troubleshooting Guide](/resources/troubleshooting) for common issues.
+</Tip>
+
+## Project Structure
+
+After installation, your directory should look like this:
+
+```
+XAUUSD_TRADING_ASISTENT_AI/
+├── .streamlit/
+│   └── secrets.toml          # Your API key (DO NOT COMMIT)
+├── XAUSD_AI.py               # Core trading bot logic
+├── app.py                    # Streamlit dashboard
+├── requirements.txt          # Python dependencies
+└── README.md                 # Project documentation
+```
+
+## Optional: Running in Production
+
+For continuous operation, consider running the bot as a background service:
+
+<Tabs>
+  <Tab title="Linux (systemd)">
+    Create a systemd service file:
+
+    ```bash /etc/systemd/system/xauusd-bot.service
+    [Unit]
+    Description=XAUUSD Trading Bot
+    After=network.target
+
+    [Service]
+    Type=simple
+    User=your-username
+    WorkingDirectory=/path/to/XAUUSD_TRADING_ASISTENT_AI
+    ExecStart=/usr/bin/streamlit run app.py
+    Restart=on-failure
+
+    [Install]
+    WantedBy=multi-user.target
+    ```
+
+    Enable and start:
+
+    ```bash
+    sudo systemctl enable xauusd-bot
+    sudo systemctl start xauusd-bot
+    ```
+  </Tab>
+
+  <Tab title="Windows (Task Scheduler)">
+    1. Open Task Scheduler
+    2. Create Basic Task
+    3. Set trigger to "At startup"
+    4. Action: Start a program
+    5. Program: `streamlit`
+    6. Arguments: `run app.py`
+    7. Start in: Your project directory
+  </Tab>
+
+  <Tab title="Docker">
+    Create a `Dockerfile`:
+
+    ```dockerfile Dockerfile
+    FROM python:3.11-slim
+
+    WORKDIR /app
+
+    COPY requirements.txt .
+    RUN pip install --no-cache-dir -r requirements.txt
+
+    COPY . .
+
+    EXPOSE 8501
+
+    CMD ["streamlit", "run", "app.py"]
+    ```
+
+    Build and run:
+
+    ```bash
+    docker build -t xauusd-bot .
+    docker run -p 8501:8501 xauusd-bot
+    ```
+  </Tab>
+</Tabs>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quick Start" icon="rocket" href="/quickstart">
+    Run your first analysis in 5 minutes
+  </Card>
+  <Card title="Dashboard Guide" icon="desktop" href="/guides/dashboard-usage">
+    Learn to use the Streamlit interface
+  </Card>
+  <Card title="Architecture" icon="diagram-project" href="/concepts/architecture">
+    Understand how the system works
+  </Card>
+  <Card title="Troubleshooting" icon="wrench" href="/resources/troubleshooting">
+    Fix common installation issues
+  </Card>
+</CardGroup>
+
+## Getting Help
+
+If you encounter issues during installation:
+
+1. Check the [Troubleshooting Guide](/resources/troubleshooting)
+2. Review the [FAQ](/resources/faq)
+3. Open an issue on [GitHub](https://github.com/codebytemirza/XAUUSD_TRADING_ASISTENT_AI/issues)
+
+<Info>
+  For assistance, include your Python version, operating system, and complete error messages when reporting issues.
+</Info>

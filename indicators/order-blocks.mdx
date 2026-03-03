@@ -1,0 +1,474 @@
+---
+title: 'Order Blocks'
+description: 'Understanding institutional order blocks for high-probability entry zones in XAUUSD trading'
+---
+
+## What are Order Blocks?
+
+Order blocks are price zones where institutional traders (banks, hedge funds, market makers) have placed large orders. These areas represent significant supply or demand and often act as strong support or resistance levels.
+
+<Info>
+Order blocks are one of the most powerful price action concepts in the XAUUSD market, where institutional participation is extremely high.
+</Info>
+
+## How Order Blocks Form
+
+Order blocks form when large institutional orders are executed:
+
+**Bullish Order Block (Demand)**:
+- Strong bullish move (long green candle or series of candles)
+- Preceded by a consolidation or down move
+- Last bearish candle before rally = Order block zone
+- Institutions accumulated long positions here
+
+**Bearish Order Block (Supply)**:
+- Strong bearish move (long red candle or series of candles)
+- Preceded by a consolidation or up move
+- Last bullish candle before drop = Order block zone
+- Institutions accumulated short positions here
+
+<Tip>
+The logic: Before a strong directional move, institutions must accumulate positions. The last opposite-colored candle before the move is where they were buying (bullish OB) or selling (bearish OB).
+</Tip>
+
+## Identifying Order Blocks
+
+<CardGroup cols={2}>
+  <Card title="Bullish Order Block" icon="square" color="#00ff00">
+    **Characteristics:**
+    - Last red/bearish candle before strong rally
+    - Often has long lower wick (buying pressure)
+    - Followed by strong bullish momentum
+    - Acts as support on retest
+  </Card>
+  
+  <Card title="Bearish Order Block" icon="square" color="#ff0000">
+    **Characteristics:**
+    - Last green/bullish candle before strong drop
+    - Often has long upper wick (selling pressure)
+    - Followed by strong bearish momentum
+    - Acts as resistance on retest
+  </Card>
+</CardGroup>
+
+## Order Block Validation
+
+Not all order blocks are equal. The AI validates order blocks based on:
+
+### 1. Momentum Away From Block
+
+**Strong Order Block**:
+- Price moves 30+ pips away quickly (within 1-3 candles)
+- Little to no retracement during initial move
+- Clear institutional footprint
+
+**Weak Order Block**:
+- Slow, gradual price movement
+- Frequent pullbacks during move
+- Likely retail-driven, not institutional
+
+### 2. Timeframe Importance
+
+| Timeframe | Order Block Strength | Duration |
+|-----------|---------------------|----------|
+| **D1** | Extremely Strong | Days to weeks |
+| **H4** | Very Strong | Hours to days |
+| **H1** | Strong | Few hours to day |
+| **M30** | Moderate | 1-4 hours |
+| **M15/M5** | Weak | Minutes to hour |
+
+<Note>
+Higher timeframe order blocks carry more weight and remain valid longer.
+</Note>
+
+### 3. Unmitigated vs Mitigated
+
+**Unmitigated Order Block**:
+- Price has NOT returned to this zone yet
+- Fresh, untested supply/demand
+- Highest probability for bounce/reversal
+
+**Mitigated Order Block**:
+- Price has already retested this zone
+- Orders already filled
+- Lower probability (but can still work)
+
+<Tip>
+The AI prioritizes unmitigated order blocks on higher timeframes for the highest probability setups.
+</Tip>
+
+## Trading Order Blocks
+
+### Entry Strategy
+
+The system uses order blocks as precise entry zones:
+
+**Bullish Order Block Entry**:
+1. Identify valid bullish order block
+2. Wait for price to pull back into the zone
+3. Look for reversal confirmation on lower timeframe (M15/M5)
+4. Enter long when price shows rejection from block
+5. Stop below the order block + ATR buffer
+
+**Bearish Order Block Entry**:
+1. Identify valid bearish order block
+2. Wait for price to rally back into the zone
+3. Look for reversal confirmation on lower timeframe
+4. Enter short when price shows rejection from block
+5. Stop above the order block + ATR buffer
+
+### Example Setup
+
+```
+Bullish Order Block Trade:
+
+H4 Chart:
+- Identified bullish order block at 2045-2050
+- Price rallied from 2050 to 2110 (60 pips)
+- Order block remains unmitigated
+
+Current Price: 2075 (pulling back)
+
+Waiting for:
+- Price to enter 2045-2050 zone
+- M15 bullish reversal candle in zone
+- RSI oversold on M15/M30
+- Confluence with EMA support
+
+Entry: 2048 (within order block)
+Stop: 2040 (below order block, 2 × ATR)
+Target: 2096 (3:1 R/R, 48 pips profit)
+
+Confluence: Order Block + EMA + RSI + H4 uptrend
+Probability: HIGH
+```
+
+<Info>
+The AI monitors all active order blocks across all six timeframes simultaneously, alerting when price approaches high-probability zones.
+</Info>
+
+## Order Blocks with Other Indicators
+
+### Order Block + EMA
+
+**Maximum Confluence Setup**:
+```
+Scenario: Price in uptrend
+- H4: Price above 50 EMA (2055 level)
+- Bullish order block at 2050-2055
+- Order block coincides with 50 EMA
+
+Confluence: Double support (OB + EMA)
+Entry Quality: EXCELLENT
+Probability: Very High
+```
+
+### Order Block + Fair Value Gap
+
+**Premium Setup**:
+```
+Scenario: Price pulling back
+- Fair Value Gap from 2048-2053
+- Bullish order block at 2045-2050
+- FVG overlaps with order block
+
+Confluence: Imbalance zone + institutional demand
+Entry Quality: PREMIUM
+Probability: Very High
+```
+
+### Order Block + RSI
+
+**Momentum Confirmation**:
+```
+Scenario: Pullback to order block
+- Price enters bullish order block
+- M15 RSI: 28 (oversold)
+- M30 RSI: 35 (oversold)
+- H1 RSI: 52 (still bullish bias)
+
+Confluence: Oversold at demand zone
+Entry Quality: STRONG
+Probability: High
+```
+
+<CardGroup cols={1}>
+  <Card title="Multi-Indicator Confluence" icon="layer-group">
+    The highest probability trades occur when order blocks align with multiple other indicators. The AI automatically identifies these premium confluence zones.
+  </Card>
+</CardGroup>
+
+## Order Block Mitigation
+
+Understanding how order blocks get "used up":
+
+### First Touch (Unmitigated)
+
+**Highest Probability**:
+- Institutions' orders still resting in zone
+- Strong reaction expected
+- Best risk/reward ratio
+- Priority entry zone
+
+### Second Touch (Partially Mitigated)
+
+**Moderate Probability**:
+- Some institutional orders filled on first touch
+- Some may remain
+- Still valid but lower probability
+- Requires additional confluence
+
+### Multiple Touches (Fully Mitigated)
+
+**Low Probability**:
+- Most/all orders likely filled
+- Zone becomes less significant
+- May act as minor support/resistance
+- AI deprioritizes these zones
+
+<Note>
+The AI tracks order block mitigation status and assigns probability scores accordingly.
+</Note>
+
+## Order Block Zones vs Levels
+
+Order blocks are ZONES, not exact price levels:
+
+**Order Block Zone**:
+- Entire candle range (high to low)
+- Price can enter anywhere in zone
+- More realistic than exact levels
+- Provides entry flexibility
+
+**Example**:
+```
+Bullish Order Block Candle:
+High: 2055
+Low: 2048
+Close: 2049
+
+Order Block Zone: 2048-2055 (entire range)
+
+Valid Entries:
+- 2048 (bottom of zone) ✓
+- 2052 (middle of zone) ✓
+- 2055 (top of zone) ✓
+
+All are within institutional demand area.
+```
+
+<Tip>
+Entering at the top of a bullish order block (or bottom of bearish OB) gives the best risk/reward since stops can be tighter.
+</Tip>
+
+## Multi-Timeframe Order Blocks
+
+The AI analyzes order blocks across all timeframes:
+
+```
+Scenario: Multi-timeframe order block alignment
+
+D1: Bullish order block at 2040-2060 (major demand)
+H4: Bullish order block at 2048-2055 (within D1 block)
+H1: Bullish order block at 2050-2053 (within H4 block)
+
+Analysis:
+- Triple timeframe confluence
+- H1 block nested inside H4 block inside D1 block
+- Extremely strong demand zone
+- Very high probability reversal area
+
+AI Rating: PREMIUM SETUP
+Expected Reaction: Strong bounce with minimal drawdown
+```
+
+<Info>
+Nested order blocks (smaller timeframe OB within larger timeframe OB) create the highest probability setups in the system.
+</Info>
+
+## Order Block Invalidation
+
+Order blocks can become invalid:
+
+### Break and Close Beyond
+
+**Bullish Order Block Invalidated**:
+- Price breaks below order block low
+- Closes below on same timeframe
+- Institutions' buying absorbed
+- Demand zone failed
+
+**Bearish Order Block Invalidated**:
+- Price breaks above order block high
+- Closes above on same timeframe
+- Institutions' selling absorbed
+- Supply zone failed
+
+<Note>
+The AI automatically removes invalidated order blocks from consideration and alerts to find new valid zones.
+</Note>
+
+## Common Order Block Patterns
+
+### Pattern 1: Breakout and Retest
+
+```
+Setup:
+1. Price breaks resistance
+2. Creates bullish order block at old resistance
+3. Price pulls back to retest
+4. Old resistance becomes new support (order block)
+5. Entry on retest
+
+Logic: Institutions who bought the breakout defend their
+       positions on pullback.
+```
+
+### Pattern 2: Failed Breakout (Trap)
+
+```
+Setup:
+1. Price breaks support (fake breakout)
+2. Creates bearish order block just below support
+3. Price quickly reverses back above support
+4. Order block below becomes invalidated
+5. Avoid trading this zone
+
+Logic: False breakout ("liquidity grab") - avoid trap.
+```
+
+### Pattern 3: Nested Order Blocks
+
+```
+Setup:
+1. H4 creates bullish order block (2045-2055)
+2. Within this zone, H1 creates order block (2048-2052)
+3. Price approaches zone
+4. H1 order block tested first
+5. If H1 fails, H4 order block is backup
+
+Logic: Multiple layers of institutional support.
+       High-probability zone with built-in risk levels.
+```
+
+## Order Block Best Practices
+
+### Do's:
+
+1. **Prioritize Higher Timeframes**: D1 and H4 order blocks most reliable
+2. **Wait for Confirmation**: Don't enter blindly; wait for price reaction
+3. **Use Unmitigated Blocks**: First touch has highest probability
+4. **Combine with Confluence**: OB + EMA + RSI = best setups
+5. **Respect Invalidation**: Exit if order block breaks and closes beyond
+
+### Don'ts:
+
+1. **Don't Trade Every Order Block**: Quality over quantity
+2. **Don't Ignore Context**: Ensure block aligns with overall trend
+3. **Don't Use M5 Order Blocks**: Too short-term, low reliability
+4. **Don't Enter Without Confirmation**: Wait for reversal signal
+5. **Don't Forget ATR Buffer**: Place stops beyond block + ATR cushion
+
+<CardGroup cols={1}>
+  <Card title="AI Discipline" icon="robot">
+    The AI enforces these best practices automatically, only trading order blocks that meet strict quality criteria and confluence requirements.
+  </Card>
+</CardGroup>
+
+## Practical Examples
+
+### Example 1: Perfect Order Block Trade
+
+```
+Setup:
+- H4 bullish order block at 2048-2053 (unmitigated)
+- Price rallied from 2050 to 2095 (45 pips)
+- Currently at 2075, pulling back
+- H4 uptrend intact (price above 50 EMA)
+- D1 also bullish
+
+Price Action:
+- Price enters order block at 2052
+- M15 shows bullish engulfing in zone
+- RSI on M15: 32 (oversold)
+- ATR (H1): 20 pips
+
+Trade:
+Entry: 2052
+Stop: 2048 - (20 × 2) = 2008 (below OB + ATR)
+Target: 2052 + (44 × 3) = 2184 (3:1 R/R)
+
+Result: Price bounced to 2089 (37 pips profit)
+        Order block held perfectly.
+```
+
+### Example 2: Failed Order Block (Avoided)
+
+```
+Setup:
+- H1 bullish order block at 2060-2063
+- Price initially rallied to 2075
+- BUT: H4 and D1 in downtrend
+- Order block against higher timeframe trend
+
+Price Action:
+- Price enters order block at 2062
+- Initial bounce to 2065 (+3 pips)
+- Price breaks below 2060 and closes at 2057
+- Order block invalidated
+
+AI Decision: DID NOT ENTER
+Reason: Order block against H4/D1 trend
+        Low probability setup
+        Avoided losing trade.
+```
+
+### Example 3: Nested Order Block Excellence
+
+```
+Setup:
+- D1 bullish order block: 2040-2065
+- H4 bullish order block: 2048-2058 (within D1)
+- H1 bullish order block: 2052-2055 (within H4)
+- Triple nested confluence
+
+Price Action:
+- Price pulls back into 2052-2055 zone
+- All three order blocks aligned
+- M15 RSI: 29 (extreme oversold)
+- 50 EMA at 2053 (additional confluence)
+
+Trade:
+Entry: 2053 (top of H1 OB, middle of H4 OB)
+Stop: 2047 (below H1 OB + ATR)
+Target: 2071 (3:1 R/R)
+
+Result: Price rocketed to 2089 (36 pips profit)
+        Barely went into drawdown (-2 pips max)
+        Perfect execution of nested OB concept.
+```
+
+## Key Takeaways
+
+- Order blocks mark institutional accumulation/distribution zones
+- Last opposite candle before strong move = order block
+- Higher timeframe blocks more reliable and longer-lasting
+- Unmitigated (first touch) blocks have highest probability
+- Best results when combined with EMA, RSI, FVG confluence
+- Stops placed below/above block + ATR buffer
+- AI tracks all order blocks across 6 timeframes simultaneously
+
+<CardGroup cols={1}>
+  <Card title="Institutional Edge" icon="building-columns">
+    Order blocks give retail traders visibility into institutional activity. By trading with institutions rather than against them, the system achieves its 65% win rate.
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+Learn about related price action concepts:
+
+- [Fair Value Gaps](/indicators/fair-value-gaps)
+- [EMA (Exponential Moving Average)](/indicators/ema)
+- [ATR (Average True Range)](/indicators/atr)
+- [Back to Overview](/indicators/overview)

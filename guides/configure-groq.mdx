@@ -1,0 +1,211 @@
+---
+title: 'Groq API Configuration'
+description: 'Set up your Groq API key to enable AI-powered trading signal generation'
+---
+
+## Overview
+
+The XAUUSD Trading Bot uses Groq's LLM API to generate intelligent trading signals based on technical analysis. This guide shows you how to obtain and configure your Groq API key.
+
+<Note>
+  Groq provides fast inference for large language models, enabling real-time AI analysis of market conditions.
+</Note>
+
+## Getting Your Groq API Key
+
+<Steps>
+  <Step title="Create a Groq Account">
+    Navigate to [Groq Cloud](https://console.groq.com/) and sign up for an account:
+    
+    1. Click **Sign Up** or **Get Started**
+    2. Complete registration with your email
+    3. Verify your email address
+    4. Log in to the Groq Console
+  </Step>
+
+  <Step title="Generate API Key">
+    Once logged in to the Groq Console:
+    
+    1. Navigate to **API Keys** section
+    2. Click **Create API Key**
+    3. Give your key a descriptive name (e.g., "XAUUSD Trading Bot")
+    4. Click **Generate**
+    5. **Copy the API key immediately** - you won't be able to see it again
+    
+    <Warning>
+      Store your API key securely. Never commit it to version control or share it publicly.
+    </Warning>
+  </Step>
+
+  <Step title="Create Secrets Configuration">
+    Create the Streamlit secrets directory and file:
+    
+    ```bash
+    mkdir -p .streamlit
+    touch .streamlit/secrets.toml
+    ```
+    
+    The `.streamlit` folder should be in your project root directory.
+  </Step>
+
+  <Step title="Add API Key to Secrets">
+    Open `.streamlit/secrets.toml` and add your API key:
+    
+    ```toml
+    GROQ_API_KEY = "gsk_your_actual_api_key_here"
+    ```
+    
+    Replace `gsk_your_actual_api_key_here` with the API key you copied from Groq Console.
+    
+    <Note>
+      Groq API keys typically start with `gsk_`. Make sure to include the entire key string.
+    </Note>
+  </Step>
+
+  <Step title="Secure Your Secrets File">
+    Add the secrets file to your `.gitignore` to prevent accidental commits:
+    
+    ```bash
+    echo ".streamlit/secrets.toml" >> .gitignore
+    ```
+    
+    This ensures your API key stays private.
+  </Step>
+
+  <Step title="Verify Configuration">
+    Test that the bot can access your API key:
+    
+    ```python
+    import streamlit as st
+    
+    # This is how the bot loads the API key
+    api_key = st.secrets["GROQ_API_KEY"]
+    print(f"API Key loaded: {api_key[:10]}...")
+    ```
+    
+    You should see the first 10 characters of your key printed.
+  </Step>
+</Steps>
+
+## How the Bot Uses Groq
+
+The trading bot leverages Groq's LLM API through LangChain:
+
+```python
+from langchain_groq import ChatGroq
+
+# Initialize the Groq LLM
+bot = XAUUSDTradingBot(api_key=st.secrets["GROQ_API_KEY"])
+```
+
+The AI model analyzes:
+- Technical indicators (RSI, EMA, ATR)
+- Multi-timeframe confluence
+- Order blocks and Fair Value Gaps
+- Supply and demand zones
+- Market structure
+
+It then generates actionable trading signals with entry points, stop-loss, and take-profit levels.
+
+## API Key Management
+
+### Environment Variables (Alternative)
+
+For non-Streamlit deployments, you can use environment variables:
+
+<Tabs>
+  <Tab title="Linux/macOS">
+    ```bash
+    export GROQ_API_KEY="gsk_your_actual_api_key_here"
+    ```
+    
+    Add to `~/.bashrc` or `~/.zshrc` for persistence.
+  </Tab>
+  
+  <Tab title="Windows">
+    ```cmd
+    set GROQ_API_KEY=gsk_your_actual_api_key_here
+    ```
+    
+    Or use System Environment Variables for persistence.
+  </Tab>
+  
+  <Tab title="Python .env">
+    Create a `.env` file:
+    
+    ```env
+    GROQ_API_KEY=gsk_your_actual_api_key_here
+    ```
+    
+    Load with `python-dotenv`:
+    
+    ```python
+    from dotenv import load_dotenv
+    import os
+    
+    load_dotenv()
+    api_key = os.getenv("GROQ_API_KEY")
+    ```
+  </Tab>
+</Tabs>
+
+### Rotating API Keys
+
+For enhanced security, rotate your API keys regularly:
+
+1. Generate a new key in Groq Console
+2. Update `.streamlit/secrets.toml` with the new key
+3. Restart the Streamlit application
+4. Delete the old key from Groq Console
+
+## Troubleshooting
+
+<Accordion title="'GROQ_API_KEY' not found in secrets">
+  This error occurs when Streamlit can't find your secrets file:
+  
+  1. Verify `.streamlit/secrets.toml` exists in your project root
+  2. Check the file name is exactly `secrets.toml` (not `secrets.txt`)
+  3. Ensure the key name is exactly `GROQ_API_KEY` (case-sensitive)
+  4. Restart the Streamlit server
+</Accordion>
+
+<Accordion title="Authentication Error / Invalid API Key">
+  If you see authentication errors:
+  
+  1. Verify you copied the complete API key from Groq Console
+  2. Check for extra spaces or newlines in `secrets.toml`
+  3. Ensure the key is still active in Groq Console
+  4. Generate a new key if the old one was deleted or expired
+</Accordion>
+
+<Accordion title="Rate Limit Exceeded">
+  Groq API has rate limits:
+  
+  - Check your current usage in Groq Console
+  - Consider upgrading your plan for higher limits
+  - Implement caching to reduce API calls
+  - Use the auto-refresh feature wisely (30-minute intervals)
+</Accordion>
+
+## Cost Considerations
+
+<Note>
+  Groq offers generous free tier limits. Monitor your usage in the Groq Console dashboard.
+</Note>
+
+The bot makes API calls:
+- Once per manual analysis ("Run New Analysis" button)
+- Every 30 minutes if auto-refresh is enabled
+- Typical cost per analysis: minimal (depends on your Groq plan)
+
+## Next Steps
+
+With Groq configured:
+
+1. [Run the trading bot](/guides/running-bot)
+2. [Learn the dashboard features](/guides/dashboard-usage)
+3. [Understand trading signals](/guides/interpreting-signals)
+
+<Warning>
+  Keep your API key secure. Never share it in screenshots, logs, or public repositories.
+</Warning>

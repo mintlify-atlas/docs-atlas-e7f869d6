@@ -1,0 +1,314 @@
+---
+title: 'Risk Management'
+description: 'Understanding the risk management protocols and position sizing in the XAUUSD Trading Assistant'
+---
+
+## Overview
+
+Risk management is the foundation of sustainable trading success. The XAUUSD Trading Assistant implements professional-grade risk protocols to protect capital while maximizing profit potential. The system follows a strict 1% risk per trade rule and uses dynamic ATR-based stop-losses.
+
+<Note>
+Proper risk management is what separates profitable traders from those who blow their accounts. Never risk more than you can afford to lose.
+</Note>
+
+## Core Risk Principles
+
+### The 1% Rule
+
+The bot adheres to the industry-standard 1% risk rule:
+
+<Info>
+**1% Risk Per Trade** means that on any single trade, the maximum loss should not exceed 1% of your total account balance.
+</Info>
+
+For example:
+- Account Balance: $10,000
+- Maximum Risk per Trade: $100 (1% of $10,000)
+- If Stop Loss is hit, you lose only $100
+
+**Benefits:**
+- Survive losing streaks without significant account damage
+- Allows for 100 consecutive losses before account depletion (theoretically)
+- Reduces emotional stress and improves decision-making
+- Enables consistent position sizing
+
+### Position Sizing Calculation
+
+```python
+# Example calculation
+account_balance = 10000
+risk_per_trade = account_balance * 0.01  # $100
+
+entry_price = 2045.50
+stop_loss = 2042.30
+stop_distance_points = (entry_price - stop_loss) * 100  # 320 points
+
+# For XAUUSD, 1 lot = $100 per point movement
+position_size = risk_per_trade / (stop_distance_points * 0.01)
+# Position size ≈ 0.31 lots
+```
+
+<Tip>
+Always calculate position size based on your stop-loss distance. A wider stop-loss requires a smaller position size to maintain the same dollar risk.
+</Tip>
+
+## ATR-Based Stop-Loss
+
+### What is ATR?
+
+Average True Range (ATR) is a volatility indicator that measures the average price movement over a specified period. The bot uses ATR to set dynamic stop-losses that adapt to current market conditions.
+
+<CardGroup cols={2}>
+  <Card title="Low Volatility" icon="compress">
+    When ATR is low, the market is quiet and stop-losses can be tighter without getting stopped out by normal price fluctuation.
+  </Card>
+  
+  <Card title="High Volatility" icon="expand">
+    When ATR is high, the market is active and stop-losses must be wider to avoid premature exits from normal market noise.
+  </Card>
+</CardGroup>
+
+### ATR Calculation Across Timeframes
+
+The system calculates ATR for all six timeframes:
+
+```
+D1 ATR:  Used for swing trading positions
+H4 ATR:  Used for day trading positions
+H1 ATR:  Used for intraday trades
+M30 ATR: Used for scalping setups
+M15 ATR: Used for precise entry timing
+M5 ATR:  Used for ultra-short-term trades
+```
+
+### Stop-Loss Placement Formula
+
+<Info>
+Typical stop-loss placement uses 1.5x to 2x the ATR value from the entry point, providing enough room for normal price fluctuation while limiting risk.
+</Info>
+
+**For Buy Trades:**
+```
+Stop Loss = Entry Price - (ATR × Multiplier)
+Multiplier typically = 1.5 to 2.0
+```
+
+**For Sell Trades:**
+```
+Stop Loss = Entry Price + (ATR × Multiplier)
+```
+
+Example:
+```python
+entry_price = 2045.50
+H1_ATR = 2.15  # Current H1 ATR
+multiplier = 1.5
+
+# Buy trade stop-loss
+stop_loss = 2045.50 - (2.15 × 1.5)
+stop_loss = 2045.50 - 3.23
+stop_loss = 2042.27
+```
+
+## Multi-Timeframe Risk Assessment
+
+The bot evaluates risk across all timeframes before generating signals:
+
+### Higher Timeframe Confirmation
+
+<Note>
+Trades taken in the direction of higher timeframe trends have statistically higher win rates and better risk-reward ratios.
+</Note>
+
+**Risk Hierarchy:**
+1. **D1 Trend** - Highest weight in risk assessment
+2. **H4 Structure** - Swing points for stop-loss placement
+3. **H1 Momentum** - Immediate trend validation
+4. **M30-M5** - Entry refinement, not primary risk determinant
+
+### Confluence and Risk Reduction
+
+When multiple timeframes align:
+- **High Confluence** → Lower perceived risk → Potential for slightly larger position
+- **Low Confluence** → Higher perceived risk → Smaller position or avoid trade
+
+<Tip>
+The AI engine automatically evaluates confluence and adjusts signal confidence accordingly. Pay attention to the confidence level in generated signals.
+</Tip>
+
+## Take-Profit Strategies
+
+The system recommends multiple take-profit levels for optimal risk-reward:
+
+### Partial Profit Taking
+
+```
+TP1: 1.5x risk (1.5:1 RR)
+  - Close 50% of position
+  - Move stop-loss to breakeven
+  
+TP2: 2.5x risk (2.5:1 RR)
+  - Close remaining 50%
+  - Lock in substantial profit
+```
+
+**Example:**
+```
+Risk: $100 (stop-loss hit)
+
+TP1: $150 profit (50% of position)
+  Profit realized: $75
+  
+TP2: $250 profit (remaining 50%)
+  Profit realized: $125
+  
+Total profit if both hit: $200
+Risk-Reward Ratio: 2:1
+```
+
+<Info>
+A 2:1 risk-reward ratio means you only need to win 35% of your trades to be profitable (before fees). The bot's 65% win rate provides significant edge.
+</Info>
+
+## Spread Monitoring
+
+The dashboard displays current spread to help assess execution risk:
+
+```python
+# From app.py
+if result.get('current_spread'):
+    st.sidebar.metric("Current Spread", f"{result['current_spread']} points")
+```
+
+<Note>
+Wide spreads during news events or low liquidity can significantly impact your effective entry price and risk-reward ratio.
+</Note>
+
+**Spread Impact:**
+- Spread < 10 points: Excellent for trading
+- Spread 10-20 points: Normal conditions
+- Spread 20-30 points: Caution advised
+- Spread > 30 points: Avoid trading or adjust position size
+
+## Risk Management Checklist
+
+Before taking any trade, verify:
+
+<CardGroup cols={2}>
+  <Card title="Account Risk" icon="shield">
+    ✓ Total risk is 1% of account balance
+    
+    ✓ Position size calculated correctly
+    
+    ✓ No more than 3-5 positions open simultaneously
+  </Card>
+  
+  <Card title="Trade Setup" icon="bullseye">
+    ✓ Stop-loss based on ATR is reasonable
+    
+    ✓ Risk-reward ratio is at least 1.5:1
+    
+    ✓ Entry aligns with higher timeframe trend
+  </Card>
+  
+  <Card title="Market Conditions" icon="chart-line">
+    ✓ Spread is within acceptable range
+    
+    ✓ No major news events imminent
+    
+    ✓ Market volatility is normal (check ATR)
+  </Card>
+  
+  <Card title="Signal Quality" icon="star">
+    ✓ AI confidence level is high or medium
+    
+    ✓ Multiple timeframes show confluence
+    
+    ✓ Technical analysis supports the signal
+  </Card>
+</CardGroup>
+
+## Order Blocks and Supply/Demand Zones
+
+These market structure elements inform stop-loss placement:
+
+**Order Blocks**
+- Institutional buying/selling zones
+- Place stops just beyond order blocks for protection
+- Provides logical stop-loss levels beyond ATR
+
+**Supply and Demand Zones**
+- Areas where price historically reversed
+- Stops placed beyond these zones avoid stop-hunts
+- Combines with ATR for optimal placement
+
+<Tip>
+When an order block aligns with an ATR-based stop-loss, this confluence provides high-confidence stop placement.
+</Tip>
+
+## Fair Value Gaps (FVG)
+
+FVGs represent inefficiencies in price movement:
+
+- Often fill before continuing in the original direction
+- Can be used as entry points with tight stops
+- Reduces risk by entering at better prices
+- ATR stops beyond FVG fill zones protect the position
+
+## Emergency Risk Controls
+
+<Note>
+The system includes several safeguards, but manual oversight is essential. Never leave positions unattended without proper stop-losses.
+</Note>
+
+**Recommended Manual Controls:**
+1. Set hard stop-losses in MetaTrader 5 immediately after entry
+2. Monitor positions during high-impact news releases
+3. Review open positions when auto-refresh updates occur
+4. Maintain a trading journal to track risk metrics over time
+
+## Dashboard Risk Visibility
+
+The Streamlit interface provides risk-relevant information:
+
+- **Spread Monitoring**: Real-time spread in sidebar
+- **Last Update Time**: Ensures data freshness
+- **Multi-timeframe Data**: Assess confluence for risk reduction
+- **AI Reasoning**: Understand the risk/reward context
+
+<Tip>
+Use the auto-refresh feature (30-minute intervals) to stay updated on changing market conditions without manual intervention.
+</Tip>
+
+## Performance Metrics
+
+**Tested Results:**
+- Win Rate: 65%
+- Risk per Trade: 1%
+- Average RR: 2:1
+- Maximum Drawdown: Limited by position sizing
+
+With these metrics:
+```
+100 trades:
+- 65 wins × $200 average = $13,000
+- 35 losses × $100 average = $3,500
+- Net profit: $9,500 (95% return on $10K account)
+```
+
+<Info>
+These are hypothetical calculations based on stated accuracy. Past performance does not guarantee future results. Always trade with money you can afford to lose.
+</Info>
+
+## Disclaimer
+
+<Note>
+This bot is for educational purposes only. Always verify signals and manage risk appropriately. Trading involves substantial risk of loss. Never trade with money you cannot afford to lose.
+</Note>
+
+Key reminders:
+- Start with a demo account to validate the system
+- Never override the 1% risk rule
+- Keep emergency fund separate from trading capital
+- Seek professional financial advice before live trading
+- Continuously monitor and adjust risk parameters

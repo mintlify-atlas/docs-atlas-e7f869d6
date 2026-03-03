@@ -1,0 +1,150 @@
+---
+title: 'XAUUSDTradingBot'
+description: 'Core trading bot class for XAUUSD market analysis and signal generation'
+---
+
+## Overview
+
+The `XAUUSDTradingBot` class is the main interface for performing technical analysis and generating trading signals for the XAUUSD (Gold/USD) market across multiple timeframes.
+
+## Class Definition
+
+### Constructor
+
+```python
+from XAUSD_AI import XAUUSDTradingBot
+
+bot = XAUUSDTradingBot(api_key=st.secrets["GROQ_API_KEY"])
+```
+
+<ParamField path="api_key" type="string" required>
+  The GROQ API key for LLM-powered analysis. Should be stored securely in environment variables or secrets management.
+</ParamField>
+
+## Methods
+
+### run_analysis()
+
+Executes a complete market analysis across all supported timeframes and generates trading signals.
+
+```python
+result = bot.run_analysis()
+```
+
+#### Parameters
+
+No parameters required.
+
+#### Returns
+
+Returns a dictionary containing analysis results with the following structure:
+
+<ResponseField name="technical_features" type="string | object">
+  Technical analysis results including indicators, patterns, and market conditions. May contain `content` attribute if returned as an object.
+</ResponseField>
+
+<ResponseField name="market_data" type="dict">
+  Market data organized by timeframe. Keys are timeframe identifiers (e.g., "D1", "H4", "H1", "M30", "M15", "M5").
+  
+  <Expandable title="Timeframe Data Structure">
+    Each timeframe contains formatted market data as a multi-line string with:
+    - Price information (Open, High, Low, Close)
+    - Volume data
+    - Technical indicators
+    - Trend information
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="trading_signal" type="string | object">
+  Generated trading signal with entry/exit recommendations. May contain `content` attribute if returned as an object.
+</ResponseField>
+
+<ResponseField name="current_spread" type="number" optional>
+  Current bid-ask spread in points for XAUUSD.
+</ResponseField>
+
+#### Example Usage
+
+<CodeGroup>
+
+```python Streamlit Integration
+import streamlit as st
+from XAUSD_AI import XAUUSDTradingBot
+from datetime import datetime
+
+# Initialize bot
+bot = XAUUSDTradingBot(api_key=st.secrets["GROQ_API_KEY"])
+
+# Run analysis
+if st.button("📈 Run New Analysis"):
+    with st.spinner("Analyzing market data..."):
+        result = bot.run_analysis()
+        st.session_state['analysis_result'] = result
+        st.session_state['last_update'] = datetime.now()
+```
+
+```python Basic Usage
+from XAUSD_AI import XAUUSDTradingBot
+
+# Initialize with API key
+bot = XAUUSDTradingBot(api_key="your-groq-api-key")
+
+# Run analysis
+result = bot.run_analysis()
+
+# Access results
+print(f"Spread: {result.get('current_spread')} points")
+print(f"Signal: {result['trading_signal']}")
+print(f"Technical Analysis: {result['technical_features']}")
+
+# Iterate through timeframes
+for timeframe, data in result['market_data'].items():
+    print(f"{timeframe}: {data}")
+```
+
+```python Error Handling
+from XAUSD_AI import XAUUSDTradingBot
+
+bot = XAUUSDTradingBot(api_key="your-groq-api-key")
+
+try:
+    result = bot.run_analysis()
+    if result.get('current_spread'):
+        print(f"Current spread: {result['current_spread']} points")
+except Exception as e:
+    print(f"Analysis failed: {str(e)}")
+```
+
+</CodeGroup>
+
+## Response Formatting
+
+When working with signal content that may be returned as objects, use this helper function:
+
+```python
+def format_signal(signal_content):
+    """Format and display trading signal content"""
+    if isinstance(signal_content, str):
+        return signal_content
+    return signal_content.content if hasattr(signal_content, 'content') else str(signal_content)
+```
+
+## Best Practices
+
+<Expandable title="Security">
+  - Never hardcode API keys in your source code
+  - Use environment variables or secrets management (e.g., `st.secrets`)
+  - Rotate API keys regularly
+</Expandable>
+
+<Expandable title="Performance">
+  - Cache analysis results to avoid unnecessary API calls
+  - Implement auto-refresh with appropriate intervals (e.g., 30 minutes)
+  - Store results in session state for web applications
+</Expandable>
+
+<Expandable title="Error Handling">
+  - Always wrap `run_analysis()` calls in try-except blocks
+  - Check for optional fields before accessing them
+  - Validate API key before making analysis requests
+</Expandable>

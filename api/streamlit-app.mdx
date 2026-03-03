@@ -1,0 +1,262 @@
+---
+title: 'Streamlit Application'
+description: 'Dashboard structure and UI components for the XAUUSD Trading Bot'
+---
+
+## Overview
+
+The Streamlit application provides a web-based dashboard for running market analysis and viewing trading signals in real-time.
+
+## Application Structure
+
+### Page Configuration
+
+The application must be configured before any other Streamlit commands:
+
+```python
+import streamlit as st
+
+st.set_page_config(
+    page_title="XAUUSD Trading Bot",
+    page_icon="📈",
+    layout="wide"
+)
+```
+
+<ParamField path="page_title" type="string">
+  Browser tab title: "XAUUSD Trading Bot"
+</ParamField>
+
+<ParamField path="page_icon" type="string">
+  Browser tab icon: "📈"
+</ParamField>
+
+<ParamField path="layout" type="string">
+  Page layout mode: "wide" for full-width content
+</ParamField>
+
+### Bot Initialization
+
+```python
+from XAUSD_AI import XAUUSDTradingBot
+
+bot = XAUUSDTradingBot(api_key=st.secrets["GROQ_API_KEY"])
+```
+
+See [Environment Variables](/api/environment-variables) for configuration details.
+
+## UI Components
+
+### Sidebar Controls
+
+The sidebar contains the control panel for user interactions:
+
+<CodeGroup>
+
+```python Control Panel
+with st.sidebar:
+    st.header("Control Panel")
+    
+    # Auto-refresh toggle
+    auto_refresh = st.toggle("🔄 Auto Refresh (30min)", value=False)
+    
+    # Run analysis button
+    if st.button("📈 Run New Analysis"):
+        with st.spinner("Analyzing market data..."):
+            st.session_state['analysis_result'] = bot.run_analysis()
+            st.session_state['last_update'] = datetime.now()
+```
+
+```python Metrics Display
+# Display current spread
+if result.get('current_spread'):
+    st.sidebar.metric("Current Spread", f"{result['current_spread']} points")
+
+# Show last update time
+st.sidebar.info(
+    f"Last Updated: {st.session_state['last_update'].strftime('%Y-%m-%d %H:%M:%S')}"
+)
+```
+
+</CodeGroup>
+
+### Main Content Tabs
+
+The dashboard uses tabs to organize different views:
+
+```python
+tab1, tab2 = st.tabs(["📊 Analysis", "🎯 Trading Signal"])
+```
+
+#### Analysis Tab
+
+Displays technical analysis and market data across timeframes:
+
+```python
+with tab1:
+    # Technical Analysis
+    st.markdown("### 📊 Technical Analysis")
+    st.markdown(format_signal(result['technical_features']))
+    
+    # Market Data
+    st.markdown("### 📈 Market Data by Timeframe")
+    cols = st.columns(2)
+    for idx, (tf, data) in enumerate(result['market_data'].items()):
+        with cols[idx % 2]:
+            display_market_data(data, tf)
+```
+
+#### Trading Signal Tab
+
+Displays the generated trading signal:
+
+```python
+with tab2:
+    st.markdown("### 🎯 Trading Signal")
+    st.markdown(format_signal(result['trading_signal']))
+```
+
+## Helper Functions
+
+### display_market_data()
+
+Formats and displays market data in an expandable section:
+
+```python
+def display_market_data(data_str, timeframe):
+    """Display formatted market data in an expander"""
+    with st.expander(f"📊 {timeframe} Market Data", expanded=False):
+        lines = data_str.split('\n')
+        for line in lines:
+            if line.strip():
+                st.text(line)
+```
+
+<ParamField path="data_str" type="string" required>
+  Multi-line string containing market data for a specific timeframe
+</ParamField>
+
+<ParamField path="timeframe" type="string" required>
+  Timeframe identifier (e.g., "D1", "H4", "H1"). See [Timeframes](/api/timeframes) for supported values.
+</ParamField>
+
+### format_signal()
+
+Formats signal content that may be returned as string or object:
+
+```python
+def format_signal(signal_content):
+    """Format and display trading signal content"""
+    if isinstance(signal_content, str):
+        return signal_content
+    return signal_content.content if hasattr(signal_content, 'content') else str(signal_content)
+```
+
+<ParamField path="signal_content" type="string | object" required>
+  Signal content from bot analysis results
+</ParamField>
+
+<ResponseField name="return" type="string">
+  Formatted signal content as a string
+</ResponseField>
+
+## Auto-Refresh Feature
+
+Implements automatic analysis refresh every 30 minutes:
+
+<CodeGroup>
+
+```python Progress Tracking
+if auto_refresh:
+    current_time = datetime.now()
+    if 'last_refresh' not in st.session_state:
+        st.session_state['last_refresh'] = current_time
+    
+    time_diff = (current_time - st.session_state['last_refresh']).total_seconds()
+    remaining_time = 1800 - time_diff  # 1800 seconds = 30 minutes
+```
+
+```python Progress Display
+if remaining_time > 0:
+    progress = (1800 - remaining_time) / 1800
+    mins = int(remaining_time // 60)
+    secs = int(remaining_time % 60)
+    
+    st.sidebar.progress(
+        progress, 
+        text=f"Next refresh in: {mins:02d}:{secs:02d}"
+    )
+```
+
+```python Auto Rerun
+if time_diff >= 1800:
+    st.session_state['last_refresh'] = current_time
+    time.sleep(1)
+    st.rerun()
+```
+
+</CodeGroup>
+
+## Session State Management
+
+The application uses Streamlit session state to persist data:
+
+<ResponseField name="analysis_result" type="dict">
+  Cached result from `bot.run_analysis()` to avoid redundant API calls
+</ResponseField>
+
+<ResponseField name="last_update" type="datetime">
+  Timestamp of the last successful analysis run
+</ResponseField>
+
+<ResponseField name="last_refresh" type="datetime">
+  Timestamp of the last auto-refresh for progress calculation
+</ResponseField>
+
+## Custom Styling
+
+The application includes custom CSS for dark theme UI:
+
+```python
+st.markdown("""
+    <style>
+    .stApp {background-color: #0e1117}
+    .metric-container {
+        background-color: #1f2937;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 5px;
+    }
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 2px;
+        background-color: #1f2937;
+    }
+    .stTabs [data-baseweb="tab"] {
+        background-color: #374151;
+        padding: 10px 20px;
+        border-radius: 5px 5px 0 0;
+    }
+    </style>
+""", unsafe_allow_html=True)
+```
+
+## Error Handling
+
+```python
+try:
+    # Main application logic
+    if 'analysis_result' in st.session_state:
+        result = st.session_state['analysis_result']
+        # Display results...
+    else:
+        st.warning("⚠️ No analysis results yet. Click 'Run Analysis' to start.")
+except Exception as e:
+    st.error(f"Error: {str(e)}")
+```
+
+## Entry Point
+
+```python
+if __name__ == "__main__":
+    main()
+```

@@ -1,0 +1,451 @@
+---
+title: 'Troubleshooting'
+description: 'Common issues and solutions for the XAUUSD Trading Assistant AI'
+---
+
+## MetaTrader 5 Issues
+
+### Connection Failed
+
+<Warning>
+  If you cannot connect to MetaTrader 5, this will prevent the bot from accessing market data.
+</Warning>
+
+**Symptoms:**
+- Bot fails to start
+- Error message: "Failed to initialize MT5"
+- No market data displayed
+
+**Solutions:**
+
+<AccordionGroup>
+  <Accordion title="Ensure MetaTrader 5 is Running">
+    1. Open MetaTrader 5 desktop application
+    2. Log in to your account
+    3. Ensure you see live price feeds
+    4. Keep MT5 running while using the bot
+    
+    <Note>
+      The bot requires MT5 to be running and logged in to access market data via the API.
+    </Note>
+  </Accordion>
+
+  <Accordion title="Check Account Login Status">
+    1. In MT5, go to **Tools → Options → Server**
+    2. Verify you're connected to the server (green icon in bottom right)
+    3. If disconnected, re-enter your credentials
+    4. Check your internet connection
+  </Accordion>
+
+  <Accordion title="Verify MT5 Python Package Installation">
+    ```bash
+    pip install --upgrade MetaTrader5
+    ```
+    
+    Then test the connection:
+    ```python
+    import MetaTrader5 as mt5
+    if mt5.initialize():
+        print("MT5 initialized successfully")
+        mt5.shutdown()
+    else:
+        print("MT5 initialization failed")
+    ```
+  </Accordion>
+
+  <Accordion title="Platform Compatibility">
+    The MetaTrader5 Python package works best on:
+    - **Windows**: Full support
+    - **Linux**: Limited support (requires Wine)
+    - **macOS**: Limited support (requires Wine or virtual machine)
+    
+    <Warning>
+      If you're on Linux/macOS, consider using a Windows virtual machine or VPS for better compatibility.
+    </Warning>
+  </Accordion>
+</AccordionGroup>
+
+### Symbol Not Found
+
+**Symptoms:**
+- Error: "XAUUSD symbol not found"
+- No price data for gold
+
+**Solutions:**
+
+1. **Check Symbol Availability:**
+   - In MT5, right-click Market Watch
+   - Select "Symbols"
+   - Search for XAUUSD or Gold
+   - Ensure it's visible in Market Watch
+
+2. **Verify Symbol Name:**
+   - Some brokers use different naming: `XAUUSD`, `GOLD`, `XAUUSD.m`
+   - Check your broker's symbol naming convention
+   - Update the symbol name in `XAUSD_AI.py` if needed
+
+<Info>
+  Different brokers may use different symbol names. Always verify the exact symbol name in your MT5 platform.
+</Info>
+
+### Data Retrieval Issues
+
+**Symptoms:**
+- Incomplete historical data
+- Missing timeframe data
+- Empty dataframes
+
+**Solutions:**
+
+<AccordionGroup>
+  <Accordion title="Increase Data History">
+    1. In MT5, go to **Tools → Options → Charts**
+    2. Set "Max bars in chart" to at least 10,000
+    3. Set "Max bars in history" to at least 100,000
+    4. Restart MT5
+  </Accordion>
+
+  <Accordion title="Wait for Data Synchronization">
+    When you first add XAUUSD to Market Watch:
+    - MT5 needs time to download historical data
+    - Wait 5-10 minutes for complete synchronization
+    - Check the status bar for download progress
+  </Accordion>
+</AccordionGroup>
+
+## API Key Issues
+
+### Invalid Groq API Key
+
+<Warning>
+  An invalid or missing API key will prevent the AI component from generating trading signals.
+</Warning>
+
+**Symptoms:**
+- Error: "Invalid API key"
+- Authentication failed
+- AI analysis not working
+
+**Solutions:**
+
+<AccordionGroup>
+  <Accordion title="Verify API Key Format">
+    1. Check `.streamlit/secrets.toml` file exists
+    2. Ensure format is correct:
+    ```toml
+    GROQ_API_KEY = "gsk_..."
+    ```
+    3. No extra spaces or quotes
+    4. Key should start with `gsk_`
+  </Accordion>
+
+  <Accordion title="Generate New API Key">
+    1. Visit [Groq Console](https://console.groq.com)
+    2. Navigate to API Keys section
+    3. Revoke old key (if compromised)
+    4. Create new API key
+    5. Update `.streamlit/secrets.toml`
+    6. Restart the Streamlit app
+  </Accordion>
+
+  <Accordion title="Check API Quota">
+    - Free tier has rate limits
+    - Monitor usage in Groq Console
+    - Consider upgrading if hitting limits
+    - Wait for quota reset (usually hourly/daily)
+    
+    <Note>
+      If you're making frequent requests, you may hit rate limits. Space out your analysis requests or upgrade your plan.
+    </Note>
+  </Accordion>
+</AccordionGroup>
+
+### API Connection Timeout
+
+**Symptoms:**
+- Request timeout errors
+- Slow response from AI
+- Connection refused
+
+**Solutions:**
+1. Check internet connection
+2. Verify firewall isn't blocking Groq API
+3. Try using a VPN if blocked in your region
+4. Increase timeout settings in the code
+
+## Dependency Issues
+
+### Package Installation Failures
+
+**Symptoms:**
+- `pip install` errors
+- Module not found errors
+- Version conflicts
+
+**Solutions:**
+
+<AccordionGroup>
+  <Accordion title="Use Virtual Environment">
+    ```bash
+    # Create virtual environment
+    python -m venv venv
+    
+    # Activate (Windows)
+    venv\Scripts\activate
+    
+    # Activate (Linux/Mac)
+    source venv/bin/activate
+    
+    # Install requirements
+    pip install -r requirements.txt
+    ```
+    
+    <Info>
+      Virtual environments prevent dependency conflicts with other Python projects.
+    </Info>
+  </Accordion>
+
+  <Accordion title="Update pip and setuptools">
+    ```bash
+    python -m pip install --upgrade pip setuptools wheel
+    pip install -r requirements.txt
+    ```
+  </Accordion>
+
+  <Accordion title="Install Individual Packages">
+    If `requirements.txt` fails, install packages individually:
+    ```bash
+    pip install MetaTrader5
+    pip install pandas numpy
+    pip install langchain-groq
+    pip install streamlit
+    ```
+  </Accordion>
+
+  <Accordion title="Python Version Issues">
+    Ensure you're using Python 3.8 or higher:
+    ```bash
+    python --version
+    ```
+    
+    If version is too old:
+    - Download latest Python from [python.org](https://python.org)
+    - Install and update PATH
+    - Recreate virtual environment with new version
+  </Accordion>
+</AccordionGroup>
+
+### Import Errors
+
+**Symptoms:**
+- `ModuleNotFoundError`
+- `ImportError`
+- Missing dependencies
+
+**Solutions:**
+
+```bash
+# Verify package installation
+pip list | grep -E "MetaTrader5|pandas|numpy|langchain|streamlit"
+
+# Reinstall specific package
+pip uninstall <package-name>
+pip install <package-name>
+
+# Clear pip cache if needed
+pip cache purge
+pip install -r requirements.txt
+```
+
+## Streamlit Dashboard Issues
+
+### Dashboard Won't Start
+
+**Symptoms:**
+- `streamlit run app.py` fails
+- Port already in use
+- Application crashes on startup
+
+**Solutions:**
+
+<AccordionGroup>
+  <Accordion title="Check if Port is Already in Use">
+    ```bash
+    # Default Streamlit port is 8501
+    # Windows
+    netstat -ano | findstr :8501
+    
+    # Linux/Mac
+    lsof -i :8501
+    ```
+    
+    Use a different port:
+    ```bash
+    streamlit run app.py --server.port 8502
+    ```
+  </Accordion>
+
+  <Accordion title="Clear Streamlit Cache">
+    ```bash
+    # Clear cache directory
+    rm -rf ~/.streamlit/cache
+    
+    # Or use Streamlit command
+    streamlit cache clear
+    ```
+  </Accordion>
+
+  <Accordion title="Check File Paths">
+    Ensure you're in the correct directory:
+    ```bash
+    # Navigate to project directory
+    cd /path/to/xauusd-trading-bot
+    
+    # Verify app.py exists
+    ls -la app.py
+    
+    # Run Streamlit
+    streamlit run app.py
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Dashboard Shows Errors
+
+**Symptoms:**
+- Red error messages in dashboard
+- Features not working
+- No data displayed
+
+**Solutions:**
+
+1. **Check Browser Console:**
+   - Press F12 in browser
+   - Look for JavaScript errors
+   - Try different browser
+
+2. **Refresh the Page:**
+   - Click "Rerun" in Streamlit
+   - Hard refresh: Ctrl+Shift+R (Windows/Linux) or Cmd+Shift+R (Mac)
+
+3. **Check Logs:**
+   - Look at terminal where Streamlit is running
+   - Check for error messages
+   - Debug based on error output
+
+<Note>
+  Streamlit dashboard errors are often displayed both in the browser and terminal. Check both locations for complete error information.
+</Note>
+
+## Performance Issues
+
+### Slow Analysis
+
+**Symptoms:**
+- Analysis takes too long
+- Dashboard freezes
+- Timeout errors
+
+**Solutions:**
+
+<AccordionGroup>
+  <Accordion title="Reduce Timeframe Analysis">
+    - Focus on fewer timeframes initially
+    - Comment out some timeframes in `XAUSD_AI.py`
+    - Start with H4, H1, M30 for faster analysis
+  </Accordion>
+
+  <Accordion title="Optimize Historical Data Range">
+    - Reduce the number of bars fetched
+    - Use smaller lookback periods
+    - Balance between data sufficiency and speed
+  </Accordion>
+
+  <Accordion title="System Resources">
+    - Close unnecessary applications
+    - Ensure adequate RAM (4GB+ recommended)
+    - Check CPU usage
+    - Consider upgrading hardware for intensive analysis
+  </Accordion>
+</AccordionGroup>
+
+### High Memory Usage
+
+**Solutions:**
+- Clear Python cache regularly
+- Restart the Streamlit app periodically
+- Limit auto-refresh frequency
+- Use smaller data batches
+
+## Data Accuracy Issues
+
+### Inconsistent Signals
+
+<Warning>
+  Trading signals may vary based on market conditions, timeframe, and data availability.
+</Warning>
+
+**This is Normal If:**
+- Markets are volatile or choppy
+- Different timeframes show conflicting signals
+- Major news events are occurring
+
+**Investigate If:**
+- Signals change drastically within seconds
+- Data appears corrupted or unusual
+- Indicators show impossible values
+
+**Solutions:**
+1. Verify MT5 data feed is stable
+2. Check for broker server issues
+3. Compare with MT5's built-in indicators
+4. Ensure sufficient historical data
+
+### Spread Warnings
+
+**Symptoms:**
+- High spread alerts
+- "Spread too wide" messages
+
+**This is Normal:**
+- During market open/close
+- Major news releases
+- Low liquidity periods
+- Some broker's typical spreads
+
+<Info>
+  High spreads can significantly impact profitability. The bot alerts you to avoid trading during unfavorable spread conditions.
+</Info>
+
+## Getting Additional Help
+
+<AccordionGroup>
+  <Accordion title="Enable Debug Mode">
+    Add debug logging to help diagnose issues:
+    ```python
+    import logging
+    logging.basicConfig(level=logging.DEBUG)
+    ```
+  </Accordion>
+
+  <Accordion title="Collect System Information">
+    When reporting issues, include:
+    - Python version: `python --version`
+    - Package versions: `pip list`
+    - Operating system
+    - MT5 version
+    - Error messages (complete text)
+    - Steps to reproduce
+  </Accordion>
+
+  <Accordion title="Community Support">
+    - Check GitHub Issues for similar problems
+    - Search existing solutions
+    - Create detailed issue reports
+    - Provide code samples and error logs
+  </Accordion>
+</AccordionGroup>
+
+<Note>
+  If you've tried all troubleshooting steps and still face issues, consider checking the updated version of the project or reaching out through GitHub Issues with detailed information about your problem.
+</Note>

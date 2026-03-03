@@ -1,0 +1,609 @@
+---
+title: 'Contributing Guidelines'
+description: 'How to contribute to the XAUUSD Trading Assistant AI project'
+---
+
+## Welcome Contributors!
+
+Thank you for your interest in contributing to the XAUUSD Trading Assistant AI project! We welcome contributions from the community to help improve this educational trading tool.
+
+<Note>
+  This is an open-source educational project. All contributions should align with the goal of helping others learn about algorithmic trading and AI integration.
+</Note>
+
+## Ways to Contribute
+
+There are many ways you can contribute to this project:
+
+<CardGroup cols={2}>
+  <Card title="Report Bugs" icon="bug">
+    Found an issue? Report it on GitHub with detailed information to help us fix it.
+  </Card>
+  
+  <Card title="Suggest Features" icon="lightbulb">
+    Have ideas for improvements? Share your feature requests and enhancement ideas.
+  </Card>
+  
+  <Card title="Improve Documentation" icon="book">
+    Help make the documentation clearer, more comprehensive, and easier to understand.
+  </Card>
+  
+  <Card title="Submit Code" icon="code">
+    Fix bugs, add features, or improve existing functionality with code contributions.
+  </Card>
+</CardGroup>
+
+## Getting Started
+
+### 1. Fork and Clone the Repository
+
+```bash
+# Fork the repository on GitHub, then clone your fork
+git clone https://github.com/YOUR_USERNAME/xauusd-trading-bot.git
+cd xauusd-trading-bot
+```
+
+### 2. Set Up Development Environment
+
+```bash
+# Create a virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# Windows:
+venv\Scripts\activate
+# Linux/Mac:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Install development dependencies (if available)
+pip install -r requirements-dev.txt  # If exists
+```
+
+### 3. Create a Branch
+
+```bash
+# Create a new branch for your contribution
+git checkout -b feature/your-feature-name
+# or
+git checkout -b fix/your-bug-fix
+```
+
+<Info>
+  Use descriptive branch names: `feature/add-new-indicator`, `fix/mt5-connection-error`, `docs/update-installation-guide`
+</Info>
+
+## Contribution Guidelines
+
+### Code Standards
+
+<AccordionGroup>
+  <Accordion title="Python Style Guide">
+    Follow PEP 8 style guidelines:
+    
+    - Use 4 spaces for indentation (no tabs)
+    - Maximum line length of 88 characters (Black formatter standard)
+    - Use descriptive variable and function names
+    - Add docstrings to functions and classes
+    
+    Example:
+    ```python
+    def calculate_rsi(prices: list, period: int = 14) -> float:
+        """
+        Calculate the Relative Strength Index (RSI).
+        
+        Args:
+            prices: List of price values
+            period: RSI period (default: 14)
+            
+        Returns:
+            RSI value as a float
+        """
+        # Implementation here
+        pass
+    ```
+  </Accordion>
+
+  <Accordion title="Code Quality">
+    Ensure your code is:
+    
+    - **Clean**: Remove unnecessary comments and debug code
+    - **Efficient**: Optimize for performance where possible
+    - **Readable**: Use clear variable names and structure
+    - **Documented**: Add comments for complex logic
+    - **Type-hinted**: Use Python type hints where applicable
+    
+    <Note>
+      Consider using tools like `black` for formatting and `pylint` for linting.
+    </Note>
+  </Accordion>
+
+  <Accordion title="Error Handling">
+    Implement proper error handling:
+    
+    ```python
+    try:
+        # Code that might fail
+        data = mt5.copy_rates_from_pos("XAUUSD", mt5.TIMEFRAME_H1, 0, 100)
+        if data is None:
+            raise ValueError("Failed to retrieve market data")
+    except Exception as e:
+        logging.error(f"Error fetching data: {e}")
+        # Handle error appropriately
+    ```
+    
+    - Use try-except blocks for external dependencies
+    - Log errors with appropriate severity levels
+    - Provide meaningful error messages
+    - Fail gracefully when possible
+  </Accordion>
+
+  <Accordion title="Dependencies">
+    When adding new dependencies:
+    
+    - Justify why the dependency is needed
+    - Use well-maintained, reputable packages
+    - Update `requirements.txt` with pinned versions
+    - Document any special installation steps
+    
+    Example `requirements.txt` entry:
+    ```txt
+    pandas==2.0.3  # Data manipulation
+    numpy==1.24.3  # Numerical operations
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Testing Requirements
+
+<Warning>
+  All code contributions should be tested thoroughly before submission.
+</Warning>
+
+<AccordionGroup>
+  <Accordion title="Testing Checklist">
+    Before submitting your contribution:
+    
+    - [ ] Test on a demo MT5 account
+    - [ ] Verify existing functionality still works
+    - [ ] Test edge cases and error conditions
+    - [ ] Check with different timeframes
+    - [ ] Verify Streamlit dashboard still loads
+    - [ ] Test with various market conditions (if possible)
+    - [ ] Ensure no hardcoded credentials or API keys
+  </Accordion>
+
+  <Accordion title="Unit Tests (Optional but Recommended)">
+    If adding unit tests:
+    
+    ```python
+    import unittest
+    from XAUSD_AI import calculate_rsi
+    
+    class TestTechnicalIndicators(unittest.TestCase):
+        def test_rsi_calculation(self):
+            prices = [44, 44.34, 44.09, 43.61, 44.33]
+            rsi = calculate_rsi(prices, period=14)
+            self.assertIsNotNone(rsi)
+            self.assertGreaterEqual(rsi, 0)
+            self.assertLessEqual(rsi, 100)
+    
+    if __name__ == '__main__':
+        unittest.main()
+    ```
+  </Accordion>
+
+  <Accordion title="Manual Testing">
+    Document your testing process:
+    
+    1. **Test Environment**:
+       - OS: Windows 10
+       - Python: 3.10.5
+       - MT5: Build 3650
+    
+    2. **Test Scenarios**:
+       - Connected to demo account
+       - Ran analysis on XAUUSD
+       - Checked all timeframes
+       - Verified AI signal generation
+    
+    3. **Results**:
+       - All features working as expected
+       - No errors in console
+       - Dashboard displays correctly
+  </Accordion>
+</AccordionGroup>
+
+### Documentation Standards
+
+<AccordionGroup>
+  <Accordion title="Code Documentation">
+    Document your code appropriately:
+    
+    - **Docstrings**: Add to all functions and classes
+    - **Comments**: Explain complex logic, not obvious code
+    - **Type hints**: Use Python type annotations
+    - **Examples**: Provide usage examples for new features
+    
+    Example:
+    ```python
+    def identify_order_block(
+        df: pd.DataFrame,
+        threshold: float = 0.02
+    ) -> dict:
+        """
+        Identify potential order blocks in price data.
+        
+        Order blocks are zones where institutional traders
+        have placed significant orders.
+        
+        Args:
+            df: DataFrame with OHLC data
+            threshold: Minimum price movement to identify block (2%)
+            
+        Returns:
+            Dictionary with order block details:
+            {
+                'level': float,
+                'type': 'bullish' or 'bearish',
+                'strength': float
+            }
+            
+        Example:
+            >>> data = get_market_data("XAUUSD", "H1")
+            >>> block = identify_order_block(data)
+            >>> print(f"Order block at {block['level']}")
+        """
+        # Implementation
+        pass
+    ```
+  </Accordion>
+
+  <Accordion title="README Updates">
+    Update README.md if you:
+    
+    - Add new features
+    - Change installation steps
+    - Modify configuration requirements
+    - Add new dependencies
+    - Change usage instructions
+    
+    Keep the README:
+    - Clear and concise
+    - Up-to-date with latest changes
+    - Beginner-friendly
+    - Well-formatted
+  </Accordion>
+
+  <Accordion title="Changelog">
+    If a CHANGELOG.md exists, add your changes:
+    
+    ```markdown
+    ## [Unreleased]
+    ### Added
+    - New Fibonacci retracement analysis feature
+    - Support for additional timeframes (M1, M3)
+    
+    ### Fixed
+    - MT5 connection timeout issue
+    - Spread calculation accuracy
+    
+    ### Changed
+    - Improved RSI calculation performance
+    - Updated AI prompt for better signal clarity
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Submitting Contributions
+
+### Pull Request Process
+
+<Steps>
+  <Step title="Commit Your Changes">
+    Make clean, logical commits:
+    
+    ```bash
+    git add .
+    git commit -m "Add: Fibonacci retracement analysis feature"
+    ```
+    
+    **Commit Message Format**:
+    - `Add:` for new features
+    - `Fix:` for bug fixes
+    - `Update:` for improvements to existing features
+    - `Docs:` for documentation changes
+    - `Refactor:` for code refactoring
+    - `Test:` for adding tests
+    
+    <Info>
+      Write clear, descriptive commit messages that explain what and why, not just what.
+    </Info>
+  </Step>
+
+  <Step title="Push to Your Fork">
+    ```bash
+    git push origin feature/your-feature-name
+    ```
+  </Step>
+
+  <Step title="Create Pull Request">
+    1. Go to the original repository on GitHub
+    2. Click "New Pull Request"
+    3. Select your fork and branch
+    4. Fill out the PR template (if available)
+    5. Submit the pull request
+  </Step>
+
+  <Step title="PR Description">
+    Provide a comprehensive description:
+    
+    ```markdown
+    ## Description
+    Added Fibonacci retracement analysis to identify key support/resistance levels.
+    
+    ## Changes Made
+    - Implemented `calculate_fibonacci()` function
+    - Added Fibonacci levels to Streamlit dashboard
+    - Updated AI prompt to consider Fibonacci levels
+    - Added documentation for new feature
+    
+    ## Testing
+    - Tested on demo MT5 account
+    - Verified across all timeframes
+    - Checked dashboard display
+    - No breaking changes to existing features
+    
+    ## Screenshots (if applicable)
+    [Add screenshots of new feature]
+    
+    ## Related Issues
+    Closes #123
+    ```
+  </Step>
+</Steps>
+
+### PR Review Process
+
+<Note>
+  Be patient during the review process. Maintainers review PRs as time permits.
+</Note>
+
+What to expect:
+
+1. **Initial Review**: Maintainer checks PR description and changes
+2. **Code Review**: Detailed review of code quality and functionality
+3. **Feedback**: You may receive requests for changes
+4. **Revisions**: Make requested changes and push updates
+5. **Approval**: Once approved, your PR will be merged
+
+**Responding to Feedback**:
+- Be open to suggestions and constructive criticism
+- Ask questions if feedback is unclear
+- Make requested changes promptly
+- Update your PR branch as needed
+
+## Types of Contributions
+
+### Bug Fixes
+
+<AccordionGroup>
+  <Accordion title="Reporting Bugs">
+    When reporting a bug, include:
+    
+    - **Clear title**: Summarize the issue
+    - **Description**: Detailed explanation of the bug
+    - **Steps to reproduce**: How to trigger the bug
+    - **Expected behavior**: What should happen
+    - **Actual behavior**: What actually happens
+    - **Environment**: OS, Python version, MT5 version
+    - **Error messages**: Complete error logs
+    - **Screenshots**: If applicable
+    
+    <Info>
+      Use the GitHub issue template if available to ensure all necessary information is provided.
+    </Info>
+  </Accordion>
+
+  <Accordion title="Fixing Bugs">
+    When fixing a bug:
+    
+    1. Reference the issue number in your PR
+    2. Explain the root cause
+    3. Describe your solution
+    4. Test thoroughly to ensure the fix works
+    5. Verify no new bugs are introduced
+    
+    Example PR title: `Fix: MT5 connection timeout issue (#42)`
+  </Accordion>
+</AccordionGroup>
+
+### Feature Requests
+
+<AccordionGroup>
+  <Accordion title="Suggesting Features">
+    Before suggesting a feature:
+    
+    - Check if it already exists
+    - Search existing issues/PRs
+    - Consider if it aligns with project goals
+    - Think about implementation complexity
+    
+    In your feature request:
+    - Explain the problem it solves
+    - Describe proposed solution
+    - Provide use cases
+    - Consider alternatives
+    - Note any potential drawbacks
+  </Accordion>
+
+  <Accordion title="Implementing Features">
+    Before implementing a major feature:
+    
+    1. **Discuss first**: Open an issue to discuss the feature
+    2. **Get feedback**: Ensure maintainers agree it's a good fit
+    3. **Plan implementation**: Outline your approach
+    4. **Start development**: Once approved, begin coding
+    
+    <Warning>
+      Avoid spending significant time on a feature without first confirming it will be accepted.
+    </Warning>
+  </Accordion>
+</AccordionGroup>
+
+### Documentation Improvements
+
+Documentation contributions are highly valued:
+
+- Fix typos and grammar errors
+- Clarify confusing sections
+- Add examples and tutorials
+- Improve formatting and structure
+- Translate documentation (if applicable)
+- Add diagrams or screenshots
+
+<Note>
+  Good documentation helps onboard new users and reduces support burden. Don't underestimate its importance!
+</Note>
+
+## Community Guidelines
+
+### Code of Conduct
+
+<AccordionGroup>
+  <Accordion title="Be Respectful">
+    - Treat all contributors with respect
+    - Welcome newcomers and help them learn
+    - Accept constructive criticism gracefully
+    - Focus on the issue, not the person
+    - Respect different opinions and approaches
+  </Accordion>
+
+  <Accordion title="Be Professional">
+    - Use clear, professional language
+    - Avoid offensive or inflammatory content
+    - Stay on topic in discussions
+    - Give credit where credit is due
+    - Acknowledge your mistakes
+  </Accordion>
+
+  <Accordion title="Be Collaborative">
+    - Share knowledge and help others
+    - Provide constructive feedback
+    - Be open to learning from others
+    - Work together to solve problems
+    - Celebrate community successes
+  </Accordion>
+</AccordionGroup>
+
+### Communication Channels
+
+- **GitHub Issues**: Bug reports, feature requests
+- **GitHub Discussions**: Questions, ideas, general discussion
+- **Pull Requests**: Code contributions and reviews
+
+<Info>
+  When asking questions, provide context and show what you've tried. This helps others help you more effectively.
+</Info>
+
+## Recognition
+
+### Contributors
+
+All contributors will be:
+
+- Listed in the project's contributors page
+- Acknowledged in release notes (for significant contributions)
+- Credited in documentation (for documentation contributions)
+
+<Note>
+  We value all contributions, whether it's fixing a typo or adding a major feature. Every contribution helps improve the project!
+</Note>
+
+## Advanced Topics
+
+### Adding New Indicators
+
+When adding technical indicators:
+
+1. **Research**: Ensure accurate implementation
+2. **Function**: Create a clean, reusable function
+3. **Integration**: Add to analysis pipeline
+4. **Dashboard**: Update Streamlit UI if needed
+5. **AI**: Update AI prompt to consider new indicator
+6. **Documentation**: Explain the indicator and its use
+
+Example structure:
+```python
+def calculate_indicator(
+    df: pd.DataFrame,
+    **params
+) -> pd.Series:
+    """
+    Calculate [Indicator Name].
+    
+    Args:
+        df: OHLC DataFrame
+        **params: Indicator parameters
+        
+    Returns:
+        Series with indicator values
+    """
+    # Implementation
+    pass
+```
+
+### Platform Integrations
+
+Interested in adding support for other platforms (TradingView, cTrader, etc.)?
+
+1. **Abstract data layer**: Separate data fetching from analysis
+2. **Platform adapter**: Create adapter for new platform
+3. **Configuration**: Add platform selection option
+4. **Testing**: Test thoroughly with the new platform
+5. **Documentation**: Update docs with new platform setup
+
+<Warning>
+  Platform integrations are complex. Please discuss with maintainers before starting significant work.
+</Warning>
+
+### AI Model Improvements
+
+Contributing to the AI component:
+
+- Improve prompt engineering
+- Add support for different LLM providers
+- Enhance context provided to AI
+- Improve signal formatting and clarity
+- Add confidence scoring
+
+## Questions?
+
+Need help with contributing?
+
+- Check the [FAQ](/resources/faq)
+- Review [Troubleshooting](/resources/troubleshooting)
+- Search existing GitHub issues
+- Open a new discussion on GitHub
+
+<Info>
+  Don't hesitate to ask questions! The community is here to help, and asking questions helps improve documentation for future contributors.
+</Info>
+
+## Thank You!
+
+<Note>
+  Thank you for contributing to the XAUUSD Trading Assistant AI! Your efforts help make this educational tool better for everyone.
+</Note>
+
+Remember:
+
+- Start small if you're new to contributing
+- Ask questions when needed
+- Be patient with the review process
+- Learn from feedback
+- Have fun and learn!
+
+Happy coding! 🚀

@@ -1,0 +1,535 @@
+---
+title: 'Fair Value Gaps (FVG)'
+description: 'Understanding Fair Value Gaps for identifying price imbalances and high-probability reversal zones in XAUUSD trading'
+---
+
+## What are Fair Value Gaps?
+
+Fair Value Gaps (FVGs), also known as imbalance zones or liquidity voids, are areas on the chart where price moved so quickly that little to no trading occurred. These gaps represent inefficiencies that price often returns to "fill" later.
+
+<Info>
+FVGs are a core concept in Smart Money trading and ICT (Inner Circle Trader) methodology, providing precise entry and exit zones in the XAUUSD market.
+</Info>
+
+## How Fair Value Gaps Form
+
+FVGs form when there's a significant imbalance between buyers and sellers:
+
+**Bullish FVG (Buy-Side Imbalance)**:
+- Three consecutive candles
+- Candle 1: Down or neutral
+- Candle 2: Strong bullish move (gap created)
+- Candle 3: Continuation up
+- **Gap**: Space between Candle 1 high and Candle 3 low
+
+**Bearish FVG (Sell-Side Imbalance)**:
+- Three consecutive candles
+- Candle 1: Up or neutral
+- Candle 2: Strong bearish move (gap created)
+- Candle 3: Continuation down
+- **Gap**: Space between Candle 1 low and Candle 3 high
+
+<Tip>
+The middle candle's aggressive move creates the imbalance. Price "skipped over" certain price levels, leaving unfilled orders and creating the FVG.
+</Tip>
+
+## Identifying Fair Value Gaps
+
+<CardGroup cols={2}>
+  <Card title="Bullish FVG" icon="arrow-up">
+    **Formation:**
+    - Gap between candle 1 high and candle 3 low
+    - Price accelerated upward
+    - Unfilled buy orders left below
+    - Acts as support on retest
+  </Card>
+  
+  <Card title="Bearish FVG" icon="arrow-down">
+    **Formation:**
+    - Gap between candle 1 low and candle 3 high
+    - Price accelerated downward
+    - Unfilled sell orders left above
+    - Acts as resistance on retest
+  </Card>
+</CardGroup>
+
+## Why FVGs Matter
+
+Fair Value Gaps are powerful because:
+
+### 1. Price Magnetism
+
+Price has a tendency to return to FVGs to "fill" the imbalance:
+
+- **Unfilled orders**: Institutional traders have resting orders in FVG zones
+- **Market efficiency**: Markets seek equilibrium, FVGs represent disequilibrium
+- **High probability**: 70-80% of FVGs get filled/tested
+
+### 2. Support/Resistance
+
+Once price returns to fill an FVG:
+
+- **Bullish FVG**: Acts as support (demand)
+- **Bearish FVG**: Acts as resistance (supply)
+- Provides precise entry zones with defined risk
+
+### 3. Trend Confirmation
+
+FVGs validate trend strength:
+
+- **Multiple bullish FVGs**: Strong uptrend
+- **Multiple bearish FVGs**: Strong downtrend
+- **No FVGs**: Choppy, ranging market
+
+<Note>
+The XAUUSD market creates numerous FVGs daily due to its volatility, making this indicator especially valuable for gold trading.
+</Note>
+
+## FVG Trading Strategies
+
+### Strategy 1: FVG Retest Entry
+
+The most common and reliable FVG strategy:
+
+**Bullish FVG Entry**:
+1. Identify valid bullish FVG
+2. Wait for price to pull back into FVG zone
+3. Look for bullish reversal on lower timeframe (M15/M5)
+4. Enter long when price shows rejection
+5. Stop below FVG + ATR buffer
+6. Target: Next resistance or 3:1 R/R
+
+**Bearish FVG Entry**:
+1. Identify valid bearish FVG
+2. Wait for price to rally back into FVG zone
+3. Look for bearish reversal on lower timeframe
+4. Enter short when price shows rejection
+5. Stop above FVG + ATR buffer
+6. Target: Next support or 3:1 R/R
+
+### Strategy 2: FVG as Target
+
+Use FVGs as profit targets:
+
+```
+Scenario: Short trade from resistance
+
+Entry: 2095 (resistance level)
+Stop: 2105 (10 pips above resistance)
+
+Target Options:
+1. Next support: 2070 (25 pips)
+2. Unfilled bullish FVG: 2078-2082 (13-17 pips)
+
+AI Decision: Target the FVG at 2080 (middle of zone)
+Reason: Price likely to react at FVG (15 pips profit)
+        More conservative but higher probability
+        than reaching 2070.
+```
+
+### Strategy 3: FVG Fill and Rejection
+
+Trade the bounce when price fills an FVG:
+
+```
+Setup: Price in uptrend
+- Bullish FVG identified at 2055-2058
+- Price currently at 2075
+- Pulling back
+
+Execution:
+- Wait for price to enter 2055-2058
+- Watch for M15 bullish reversal candle
+- Enter at 2056 (within FVG)
+- Stop at 2053 (below FVG)
+- Target: 2086 (30 pips, 10:1 R/R)
+
+Logic: FVG filled + reversal = high probability bounce
+```
+
+<Tip>
+The AI monitors all active FVGs and prioritizes setups where FVGs align with order blocks, EMA levels, or other confluence factors.
+</Tip>
+
+## FVG Validation Criteria
+
+Not all FVGs are equal. The AI validates FVGs based on:
+
+### 1. Size of the Gap
+
+**Strong FVG**:
+- Gap size > 10 pips on H1/H4
+- Gap size > 5 pips on M15/M30
+- Larger gaps = stronger imbalance
+
+**Weak FVG**:
+- Gap size < 5 pips on H1/H4
+- Gap size < 3 pips on M15/M30
+- Small gaps less significant
+
+### 2. Timeframe
+
+| Timeframe | FVG Strength | Duration |
+|-----------|--------------|----------|
+| **D1** | Extremely Strong | Days to weeks |
+| **H4** | Very Strong | Hours to days |
+| **H1** | Strong | Few hours |
+| **M30** | Moderate | 1-3 hours |
+| **M15/M5** | Weak | Minutes to hour |
+
+### 3. Context
+
+**Valid FVG Context**:
+- FVG in direction of higher timeframe trend
+- FVG created during institutional trading hours (London/NY)
+- FVG created on strong momentum move
+
+**Invalid FVG Context**:
+- FVG against higher timeframe trend (lower probability)
+- FVG created during Asian session (low liquidity)
+- FVG from slow, choppy price action
+
+<Note>
+The AI automatically filters FVGs based on these validation criteria, only highlighting high-quality setups.
+</Note>
+
+## FVG Filling Patterns
+
+FVGs can be filled in different ways:
+
+### Full Fill
+
+Price completely fills the entire FVG zone:
+
+```
+Bullish FVG: 2050-2055
+Price pulls back from 2075 to 2049
+FVG fully filled (price reached 2049, covering entire zone)
+
+Implication: Imbalance fully corrected
+            FVG likely mitigated
+            Lower probability on second test
+```
+
+### Partial Fill (50% Rule)
+
+Price fills only part of the FVG:
+
+```
+Bullish FVG: 2050-2055
+Price pulls back from 2075 to 2052.5 (middle of FVG)
+FVG 50% filled
+
+Implication: Partial imbalance correction
+            Strong FVG (held at 50% level)
+            Can still act as support on future tests
+```
+
+### Wick Fill vs Body Fill
+
+**Wick Fill**:
+- Only candle wick enters FVG
+- Body doesn't close in FVG
+- Weak fill, FVG still valid
+
+**Body Fill**:
+- Candle body closes in FVG
+- Strong fill, FVG partially mitigated
+- Lower probability on retests
+
+<Tip>
+The 50% rule is important: Many FVGs only fill to their midpoint before reversing. The AI marks the 50% level as a key entry zone.
+</Tip>
+
+## FVG with Other Indicators
+
+### FVG + Order Blocks
+
+**Premium Confluence Setup**:
+```
+Scenario: Pullback in uptrend
+
+H4 Analysis:
+- Bullish order block: 2048-2053
+- Bullish FVG: 2050-2054
+- Order block overlaps with FVG
+
+Confluence: Institutional demand + price imbalance
+Quality: EXCELLENT
+Probability: Very High
+
+Entry: 2051 (overlap zone)
+Stop: 2046 (below both)
+Target: 2096 (3:1 R/R)
+```
+
+### FVG + EMA
+
+**Dynamic Support/Resistance**:
+```
+Scenario: EMA retest setup
+
+H1 Analysis:
+- 50 EMA at 2058 level
+- Bullish FVG: 2055-2059
+- FVG zone contains 50 EMA
+
+Confluence: Trend support + imbalance zone
+Quality: STRONG
+Probability: High
+
+Entry: 2057 (EMA + FVG)
+Stop: 2053 (below both)
+Target: 2081 (3:1 R/R)
+```
+
+### FVG + RSI
+
+**Oversold/Overbought at Imbalance**:
+```
+Scenario: Oversold pullback
+
+Multi-timeframe Analysis:
+- Bullish FVG (H1): 2052-2056
+- Price enters FVG at 2054
+- M15 RSI: 28 (oversold)
+- M30 RSI: 33 (oversold)
+- H1 RSI: 48 (neutral, room to rise)
+
+Confluence: Imbalance + oversold momentum
+Quality: STRONG
+Probability: High
+```
+
+<CardGroup cols={1}>
+  <Card title="Triple Confluence Power" icon="triangle">
+    When FVG + Order Block + EMA align at the same price zone, it creates what the system calls a "premium setup" with the highest probability of success.
+  </Card>
+</CardGroup>
+
+## Multi-Timeframe FVG Analysis
+
+The AI analyzes FVGs across all timeframes:
+
+```
+Scenario: Multi-timeframe FVG alignment
+
+D1: Bullish FVG at 2040-2065 (major imbalance)
+H4: Bullish FVG at 2048-2058 (within D1 FVG)
+H1: Bullish FVG at 2050-2055 (within H4 FVG)
+
+Analysis:
+- Triple nested FVG confluence
+- H1 FVG inside H4 FVG inside D1 FVG
+- Extreme price imbalance zone
+- Very high probability reversal area
+
+AI Rating: PREMIUM SETUP
+Expected: Strong bounce with minimal drawdown
+Position Size: Maximum (within 1% risk rule)
+```
+
+<Info>
+Nested FVGs (smaller timeframe FVG within larger timeframe FVG) create the most powerful setups, similar to nested order blocks.
+</Info>
+
+## FVG Mitigation and Invalidation
+
+### Mitigated FVG
+
+FVG is considered mitigated when:
+
+- Price fully fills the gap (100% fill)
+- Price closes within the FVG zone
+- Imbalance corrected
+
+**Effect**: Lower probability on subsequent retests
+
+### Invalidated FVG
+
+FVG is invalidated when:
+
+**Bullish FVG Invalidation**:
+- Price breaks below FVG low
+- Closes below on same timeframe
+- Support failed
+
+**Bearish FVG Invalidation**:
+- Price breaks above FVG high
+- Closes above on same timeframe
+- Resistance failed
+
+<Note>
+The AI automatically tracks FVG status (active, mitigated, invalidated) and removes invalidated FVGs from consideration.
+</Note>
+
+## FVG Best Practices
+
+### Do's:
+
+1. **Prioritize Higher Timeframes**: H4 and D1 FVGs most reliable
+2. **Trade First Touch**: Unmitigated FVGs have highest probability
+3. **Use 50% Level**: Many FVGs only fill to midpoint
+4. **Combine with Confluence**: FVG + OB + EMA = best setups
+5. **Respect Trend**: FVGs in trend direction work best
+
+### Don'ts:
+
+1. **Don't Trade Every FVG**: Quality over quantity
+2. **Don't Ignore Size**: Small FVGs (< 5 pips) are weak
+3. **Don't Trade Against Trend**: Counter-trend FVGs lower probability
+4. **Don't Enter Blindly**: Wait for reversal confirmation
+5. **Don't Forget ATR**: Place stops beyond FVG + ATR buffer
+
+<CardGroup cols={1}>
+  <Card title="AI Discipline" icon="microchip">
+    The AI enforces strict FVG quality filters, only trading setups that meet size, timeframe, and confluence requirements.
+  </Card>
+</CardGroup>
+
+## Common FVG Patterns
+
+### Pattern 1: Impulse and Retracement
+
+```
+Pattern:
+1. Strong impulse move creates FVG
+2. Price continues briefly
+3. Price retraces back to FVG (50% or full fill)
+4. FVG acts as support/resistance
+5. Price reverses from FVG in original impulse direction
+
+Probability: High
+Logic: Retracement to fill imbalance before trend continuation
+```
+
+### Pattern 2: FVG Clustering
+
+```
+Pattern:
+1. Multiple FVGs form in close proximity
+2. Creates a "FVG cluster zone"
+3. Extremely strong support/resistance area
+4. Price reaction at cluster is powerful
+
+Probability: Very High
+Logic: Multiple imbalances = multiple layers of orders
+```
+
+### Pattern 3: FVG to FVG
+
+```
+Pattern:
+1. Price at bullish FVG (support)
+2. Target is bearish FVG above (resistance)
+3. Price moves from one imbalance to another
+4. High probability of reaching target FVG
+
+Probability: High
+Logic: Price attracted from one imbalance to next
+```
+
+## Practical Examples
+
+### Example 1: Perfect FVG Trade
+
+```
+Setup:
+- H4 bullish FVG at 2052-2057 (unmitigated)
+- Created during NY session
+- Gap size: 5 pips (moderate)
+- Price rallied from 2054 to 2089
+- Currently at 2078, pulling back
+
+Price Action:
+- Price enters FVG at 2055 (50% of gap)
+- M15 bullish engulfing at 2055
+- RSI (M15): 31 (oversold)
+- H1 uptrend intact
+- ATR (H1): 18 pips
+
+Trade:
+Entry: 2055 (50% FVG level)
+Stop: 2052 - (18 × 2) = 2016 (below FVG + ATR)
+Target: 2055 + (39 × 3) = 2172 (3:1 R/R)
+
+Result: Price bounced to 2091 (36 pips profit)
+        Only went 2 pips into drawdown
+        Perfect 50% FVG fill reaction
+```
+
+### Example 2: FVG + Order Block Confluence
+
+```
+Setup:
+- H4 bullish order block: 2048-2053
+- H4 bullish FVG: 2050-2055
+- Perfect overlap at 2050-2053
+- D1 uptrend, H4 uptrend, H1 uptrend aligned
+
+Price Action:
+- Price pulls back to 2051 (confluence zone)
+- M15 shows hammer candle (bullish reversal)
+- M30 RSI: 29 (extreme oversold)
+- 50 EMA also at 2052 (triple confluence!)
+
+Trade:
+Entry: 2051 (FVG + OB + EMA)
+Stop: 2044 (below all confluence)
+Target: 2072 (3:1 R/R)
+
+Result: Price exploded to 2095 (44 pips profit)
+        Triple confluence created powerful reversal
+        Only -3 pips drawdown
+```
+
+### Example 3: Failed FVG (Avoided Loss)
+
+```
+Setup:
+- M30 bullish FVG at 2065-2068
+- Small gap (3 pips)
+- Created during Asian session
+- BUT: H4 and D1 in downtrend
+
+Price Action:
+- Price enters FVG at 2066
+- Small bounce to 2068 (+2 pips)
+- Price breaks below 2065
+- Closes at 2062 (FVG invalidated)
+
+AI Decision: DID NOT ENTER
+Reason:
+- Small FVG (3 pips = weak)
+- Low timeframe (M30 = lower reliability)
+- Against H4/D1 trend (counter-trend)
+- Asian session (low liquidity)
+
+Result: Avoided -10+ pip loss
+        FVG quality filters prevented bad trade
+```
+
+## Key Takeaways
+
+- FVGs are price imbalances that price tends to fill
+- Formed by rapid price movement leaving unfilled orders
+- Higher timeframe FVGs more reliable (H4, D1)
+- 50% fill level often provides support/resistance
+- Best results when combined with order blocks, EMA, RSI
+- Unmitigated (first touch) FVGs have highest probability
+- AI tracks all FVGs across 6 timeframes in real-time
+
+<CardGroup cols={1}>
+  <Card title="Smart Money Concept" icon="brain">
+    FVGs reveal institutional trading activity. By trading FVGs, you're trading with the "smart money" rather than against it, significantly improving your win rate.
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+Explore related price action concepts:
+
+- [Order Blocks](/indicators/order-blocks)
+- [EMA (Exponential Moving Average)](/indicators/ema)
+- [RSI (Relative Strength Index)](/indicators/rsi)
+- [Back to Overview](/indicators/overview)

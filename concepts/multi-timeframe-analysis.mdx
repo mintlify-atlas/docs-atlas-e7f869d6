@@ -1,0 +1,182 @@
+---
+title: 'Multi-Timeframe Analysis'
+description: 'How the XAUUSD Trading Assistant uses six timeframes for comprehensive market analysis'
+---
+
+## What is Multi-Timeframe Analysis?
+
+Multi-timeframe analysis is a trading methodology that examines price action across different time periods simultaneously. The XAUUSD Trading Assistant analyzes six distinct timeframes to identify high-probability trading opportunities through confluence.
+
+<Info>
+Confluence occurs when multiple timeframes align to support the same trading direction, significantly increasing the probability of a successful trade.
+</Info>
+
+## The Six Timeframes
+
+The bot analyzes XAUUSD (Gold) across the following timeframes:
+
+<CardGroup cols={2}>
+  <Card title="D1 - Daily" icon="calendar-day">
+    **Purpose**: Primary trend identification
+    
+    The daily timeframe reveals the overall market direction and major support/resistance levels. This is the highest timeframe analyzed and sets the context for all lower timeframe analysis.
+  </Card>
+  
+  <Card title="H4 - 4-Hour" icon="clock">
+    **Purpose**: Swing trading signals
+    
+    The 4-hour chart identifies intermediate trends and key swing levels. It bridges the gap between daily trends and intraday opportunities.
+  </Card>
+  
+  <Card title="H1 - 1-Hour" icon="clock">
+    **Purpose**: Trend confirmation
+    
+    The 1-hour timeframe confirms the validity of daily and 4-hour trends while providing more granular entry opportunities.
+  </Card>
+  
+  <Card title="M30 - 30-Minute" icon="clock">
+    **Purpose**: Entry refinement
+    
+    The 30-minute chart helps refine entry points and identifies short-term market structure within the larger trend.
+  </Card>
+  
+  <Card title="M15 - 15-Minute" icon="clock">
+    **Purpose**: Precise entries
+    
+    The 15-minute timeframe provides precise entry timing and helps identify optimal stop-loss placement zones.
+  </Card>
+  
+  <Card title="M5 - 5-Minute" icon="clock">
+    **Purpose**: Final execution timing
+    
+    The 5-minute chart offers the most granular view for exact entry timing and immediate price action analysis.
+  </Card>
+</CardGroup>
+
+## Technical Indicators Per Timeframe
+
+For each of the six timeframes, the system calculates and analyzes:
+
+### RSI (Relative Strength Index)
+
+<Tip>
+RSI values above 70 indicate overbought conditions (potential sell), while values below 30 indicate oversold conditions (potential buy).
+</Tip>
+
+- Identifies momentum and potential reversal points
+- Divergences across timeframes signal strong reversal opportunities
+- Helps avoid trades against extreme momentum
+
+### EMA (Exponential Moving Average)
+
+The bot uses EMAs to:
+- Determine trend direction (price above EMA = uptrend, below = downtrend)
+- Identify dynamic support/resistance levels
+- Confirm trend strength across multiple timeframes
+
+### ATR (Average True Range)
+
+<Note>
+ATR measures market volatility and is crucial for setting appropriate stop-loss distances that account for normal market noise.
+</Note>
+
+- Measures current market volatility
+- Used for dynamic stop-loss calculation
+- Helps size positions based on risk (1% per trade)
+
+## How Timeframes Work Together
+
+### Top-Down Analysis Approach
+
+```
+1. D1 (Daily)    → Identify overall trend direction
+        ↓
+2. H4 (4-Hour)   → Confirm trend and find swing structures
+        ↓
+3. H1 (1-Hour)   → Validate trend continuation
+        ↓
+4. M30 (30-Min)  → Locate entry zones
+        ↓
+5. M15 (15-Min)  → Refine entry timing
+        ↓
+6. M5 (5-Min)    → Execute with precision
+```
+
+### Confluence Example
+
+<Info>
+A high-probability trade occurs when all timeframes align. For example:
+- D1: Uptrend with price above EMA
+- H4: Bullish order block identified
+- H1: RSI rebounding from oversold
+- M30: Fair Value Gap (FVG) filled
+- M15: Price breaking above resistance
+- M5: Bullish candlestick pattern confirmed
+</Info>
+
+## Market Data Structure
+
+The dashboard displays market data for each timeframe in organized expandable sections:
+
+```python
+# Example market data structure
+market_data = {
+    'D1': 'Daily OHLCV + indicators',
+    'H4': '4-Hour OHLCV + indicators',
+    'H1': '1-Hour OHLCV + indicators',
+    'M30': '30-Min OHLCV + indicators',
+    'M15': '15-Min OHLCV + indicators',
+    'M5': '5-Min OHLCV + indicators'
+}
+```
+
+Each timeframe section includes:
+- Open, High, Low, Close prices
+- Volume data
+- RSI, EMA, ATR values
+- Order blocks and FVG zones
+
+## Benefits of Multi-Timeframe Analysis
+
+<CardGroup cols={2}>
+  <Card title="Higher Accuracy" icon="bullseye">
+    By requiring confluence across multiple timeframes, the system filters out low-probability setups and focuses on high-confidence trades.
+  </Card>
+  
+  <Card title="Better Risk Management" icon="shield">
+    Understanding the bigger picture helps set appropriate stop-losses and take-profit targets based on multi-timeframe support/resistance.
+  </Card>
+  
+  <Card title="Trend Alignment" icon="arrow-trend-up">
+    Ensures trades are taken in the direction of the higher timeframe trend, increasing win probability.
+  </Card>
+  
+  <Card title="Reduced False Signals" icon="filter">
+    Lower timeframe noise is filtered out by requiring confirmation from higher timeframes.
+  </Card>
+</CardGroup>
+
+## Dashboard Visualization
+
+The Streamlit dashboard presents multi-timeframe data in an intuitive format:
+
+- **Analysis Tab**: Shows technical analysis summary across all timeframes
+- **Market Data Expandables**: Each timeframe has its own expandable section for detailed review
+- **Two-Column Layout**: Timeframes are displayed in a responsive grid for easy comparison
+
+<Tip>
+Use the expandable sections in the dashboard to drill down into specific timeframes when you need more detailed information about a particular time period.
+</Tip>
+
+## AI Integration with Timeframes
+
+The Groq LLM receives technical features from all six timeframes and:
+
+1. **Analyzes Confluence**: Identifies when multiple timeframes agree on direction
+2. **Weighs Timeframes**: Gives more weight to higher timeframe signals
+3. **Identifies Divergences**: Spots when timeframes conflict and adjusts confidence accordingly
+4. **Generates Context**: Explains how timeframes interact in the current market condition
+
+<Note>
+The AI's ability to process and synthesize information from all six timeframes simultaneously is what enables the 65% accuracy rate achieved in live trading.
+</Note>

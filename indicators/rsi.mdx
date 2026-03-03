@@ -1,0 +1,230 @@
+---
+title: 'RSI (Relative Strength Index)'
+description: 'Understanding RSI indicator for momentum analysis in XAUUSD trading'
+---
+
+## What is RSI?
+
+The Relative Strength Index (RSI) is a momentum oscillator that measures the speed and magnitude of recent price changes to evaluate overbought or oversold conditions in the XAUUSD market.
+
+<Info>
+RSI values range from 0 to 100, with readings above 70 indicating overbought conditions and below 30 indicating oversold conditions.
+</Info>
+
+## How RSI Works
+
+RSI calculates the ratio of upward price movements to downward price movements over a specified period (typically 14 periods):
+
+- **RSI = 100 - (100 / (1 + RS))**
+- **RS = Average Gain / Average Loss**
+
+The indicator smooths price data to reveal momentum trends that may not be obvious from raw price action.
+
+## RSI Levels in XAUUSD Trading
+
+<CardGroup cols={3}>
+  <Card title="Overbought" icon="arrow-trend-up">
+    **RSI > 70**
+    
+    Price may be overextended to the upside. Potential reversal or consolidation ahead.
+  </Card>
+  
+  <Card title="Neutral" icon="minus">
+    **RSI 30-70**
+    
+    Normal trading range. Trend is healthy and sustainable.
+  </Card>
+  
+  <Card title="Oversold" icon="arrow-trend-down">
+    **RSI < 30**
+    
+    Price may be overextended to the downside. Potential bounce or reversal.
+  </Card>
+</CardGroup>
+
+## RSI in the Trading System
+
+The XAUUSD Trading Assistant AI uses RSI across multiple timeframes to:
+
+### 1. Identify Momentum Shifts
+
+<Tip>
+When RSI crosses above 50, it signals bullish momentum. Crossing below 50 indicates bearish momentum.
+</Tip>
+
+The AI monitors RSI on all six timeframes (D1, H4, H1, M30, M15, M5) to detect momentum alignment:
+
+- **All timeframes RSI > 50**: Strong bullish confluence
+- **All timeframes RSI < 50**: Strong bearish confluence
+- **Mixed RSI readings**: Choppy market, wait for clarity
+
+### 2. Detect Divergences
+
+Divergences between price and RSI often signal potential reversals:
+
+**Bullish Divergence**:
+- Price makes lower lows
+- RSI makes higher lows
+- Signal: Potential bullish reversal
+
+**Bearish Divergence**:
+- Price makes higher highs
+- RSI makes lower highs
+- Signal: Potential bearish reversal
+
+<Note>
+Divergences are most reliable on H1 and H4 timeframes in the XAUUSD market.
+</Note>
+
+### 3. Confirm Trend Strength
+
+RSI helps validate trend quality:
+
+- **Strong Uptrend**: RSI stays above 40, rarely touching 30
+- **Strong Downtrend**: RSI stays below 60, rarely touching 70
+- **Weak Trend**: RSI frequently crosses 50 line
+
+## Multi-Timeframe RSI Analysis
+
+The AI performs sophisticated multi-timeframe RSI analysis:
+
+```
+D1 RSI: 65 (Bullish momentum on daily)
+H4 RSI: 58 (Confirming bullish bias)
+H1 RSI: 45 (Slight pullback)
+M30 RSI: 35 (Oversold on lower timeframe)
+M15 RSI: 32 (Deep oversold)
+M5 RSI: 28 (Extreme oversold)
+
+AI Interpretation: Bullish higher timeframe trend with oversold
+lower timeframes = High-probability long entry opportunity
+```
+
+<Tip>
+The best entries occur when lower timeframes (M15, M5) show oversold RSI while higher timeframes (D1, H4) maintain bullish momentum.
+</Tip>
+
+## RSI Trading Strategies
+
+### Strategy 1: Overbought/Oversold Reversals
+
+**Long Setup**:
+- RSI drops below 30 on M15 or M5
+- Higher timeframes (H1, H4) show uptrend
+- Look for RSI to cross back above 30 for entry
+
+**Short Setup**:
+- RSI rises above 70 on M15 or M5
+- Higher timeframes (H1, H4) show downtrend
+- Look for RSI to cross back below 70 for entry
+
+### Strategy 2: RSI 50 Line Crossover
+
+**Bullish Signal**:
+- RSI crosses above 50 on H1 or H4
+- Confirms shift to bullish momentum
+- Enter on pullback to support
+
+**Bearish Signal**:
+- RSI crosses below 50 on H1 or H4
+- Confirms shift to bearish momentum
+- Enter on pullback to resistance
+
+### Strategy 3: Divergence Trading
+
+<CardGroup cols={1}>
+  <Card title="High-Probability Setup" icon="chart-line">
+    Wait for RSI divergence on H1 or H4 + confluence with order blocks or FVGs for best results.
+  </Card>
+</CardGroup>
+
+## RSI with Other Indicators
+
+RSI works best when combined with other system indicators:
+
+| Indicator | RSI Confluence | Trading Signal |
+|-----------|----------------|----------------|
+| **EMA** | Price above EMA + RSI > 50 | Strong bullish |
+| **Order Blocks** | RSI oversold at demand zone | High-probability long |
+| **Fair Value Gap** | RSI overbought near FVG | Potential reversal |
+| **ATR** | High ATR + extreme RSI | Strong momentum move |
+
+<Info>
+The AI automatically identifies these confluence patterns and weights them in the final trade signal.
+</Info>
+
+## Common RSI Mistakes to Avoid
+
+1. **Trading Overbought/Oversold Blindly**: RSI can stay extreme during strong trends
+2. **Ignoring Higher Timeframes**: M5 RSI oversold means little if D1 is in strong downtrend
+3. **Missing Divergences**: These are powerful reversal signals often overlooked
+4. **Using RSI Alone**: Always combine with price action and other indicators
+
+<Note>
+The AI avoids these mistakes by analyzing RSI in context with all other indicators and timeframes.
+</Note>
+
+## RSI Settings
+
+The system uses standard RSI settings:
+
+- **Period**: 14 (standard setting for most markets)
+- **Overbought**: 70
+- **Oversold**: 30
+- **Midline**: 50 (momentum divider)
+
+These settings have proven effective for XAUUSD across all timeframes.
+
+## Practical Examples
+
+### Example 1: Perfect Long Setup
+
+```
+Market Context:
+- D1 RSI: 62 (Bullish)
+- H4 RSI: 58 (Bullish)
+- H1 RSI: 48 (Neutral)
+- M30 RSI: 28 (Oversold)
+- Price at demand zone
+- EMA support nearby
+
+AI Decision: HIGH-PROBABILITY LONG
+Reason: Bullish higher timeframes + oversold lower timeframes
+        at key support = excellent risk/reward
+```
+
+### Example 2: Avoid False Signal
+
+```
+Market Context:
+- D1 RSI: 35 (Bearish)
+- H4 RSI: 42 (Bearish)
+- H1 RSI: 38 (Bearish)
+- M15 RSI: 28 (Oversold)
+- Price in downtrend
+
+AI Decision: SKIP - NO TRADE
+Reason: Oversold on M15 but all higher timeframes bearish.
+        Likely just a small bounce in downtrend (low probability).
+```
+
+<Tip>
+Trust the AI's multi-timeframe RSI analysis. It processes complex RSI relationships that are difficult to track manually.
+</Tip>
+
+## Key Takeaways
+
+- RSI measures momentum and identifies overbought/oversold conditions
+- Most powerful when analyzed across multiple timeframes
+- Divergences signal potential reversals
+- Best used in combination with EMA, order blocks, and FVGs
+- The AI's 65% accuracy comes from sophisticated RSI confluence analysis
+
+## Next Steps
+
+Learn how RSI works with other indicators:
+
+- [EMA (Exponential Moving Average)](/indicators/ema)
+- [ATR (Average True Range)](/indicators/atr)
+- [Order Blocks](/indicators/order-blocks)
+- [Back to Overview](/indicators/overview)
