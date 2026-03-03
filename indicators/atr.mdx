@@ -66,7 +66,7 @@ The system uses ATR to calculate appropriate stop-loss distances:
 
 ### Example Calculation
 
-```
+```text
 Scenario: Long trade setup
 Entry Price: 2050.00
 Current ATR (H1): 15 pips
@@ -88,7 +88,7 @@ The AI automatically calculates stops using ATR, ensuring they're neither too ti
 The system enforces 1% risk per trade using ATR:
 
 **Position Size Formula:**
-```
+```text
 Account Balance: $10,000
 Risk per Trade: 1% = $100
 ATR Stop Distance: 30 pips
@@ -117,7 +117,7 @@ The AI monitors ATR on multiple timeframes for comprehensive volatility analysis
 
 ### Multi-Timeframe ATR Example
 
-```
+```text
 D1 ATR: 120 pips (High volatility on daily)
 H4 ATR: 65 pips (Moderate volatility on H4)
 H1 ATR: 35 pips (Lower volatility on H1)
@@ -155,7 +155,7 @@ Low ATR periods often precede explosive moves in XAUUSD. The AI monitors for ATR
 
 The AI uses ATR to validate breakouts:
 
-```
+```text
 Scenario: Price breaks resistance
 
 Without ATR validation:
@@ -176,7 +176,7 @@ The system sets profit targets based on ATR:
 **Moderate**: 3 × ATR  
 **Aggressive**: 4-5 × ATR
 
-```
+```text
 Example:
 Entry: 2050.00
 H1 ATR: 25 pips
@@ -232,7 +232,7 @@ ATR enhances other indicator signals:
 
 ### ATR + Order Blocks
 
-```
+```text
 Setup: Long at demand zone (order block)
 
 ATR Application:
@@ -245,7 +245,7 @@ ATR Application:
 
 ### ATR + Fair Value Gap
 
-```
+```text
 Setup: Short at FVG resistance
 
 ATR Application:
@@ -258,7 +258,7 @@ ATR Application:
 
 ### ATR + EMA
 
-```
+```text
 Setup: Long at EMA support
 
 ATR Application:
@@ -278,7 +278,7 @@ ATR enables dynamic trailing stops:
 
 **Trailing Stop Formula: Current Price - (ATR × Multiplier)**
 
-```
+```text
 Example: Long trade in profit
 
 Initial Entry: 2050.00
@@ -334,7 +334,7 @@ The AI automatically selects appropriate ATR timeframe and multiplier based on t
 
 ### Example 1: High Volatility Trade
 
-```
+```text
 Market Context:
 - Major news event released
 - D1 ATR spiked from 80 pips to 150 pips
@@ -353,7 +353,7 @@ Result: Protected from volatile swings while staying in
 
 ### Example 2: Low Volatility Trade
 
-```
+```text
 Market Context:
 - Asian session, quiet market
 - H1 ATR: 12 pips (very low)
@@ -372,7 +372,7 @@ Result: Tight risk in quiet market, ready to exit if
 
 ### Example 3: ATR Divergence Warning
 
-```
+```text
 Market Context:
 - Price making new highs
 - But ATR declining (volatility decreasing)

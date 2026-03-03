@@ -111,7 +111,7 @@ The most common and reliable FVG strategy:
 
 Use FVGs as profit targets:
 
-```
+```text
 Scenario: Short trade from resistance
 
 Entry: 2095 (resistance level)
@@ -131,7 +131,7 @@ Reason: Price likely to react at FVG (15 pips profit)
 
 Trade the bounce when price fills an FVG:
 
-```
+```text
 Setup: Price in uptrend
 - Bullish FVG identified at 2055-2058
 - Price currently at 2075
@@ -201,7 +201,7 @@ FVGs can be filled in different ways:
 
 Price completely fills the entire FVG zone:
 
-```
+```text
 Bullish FVG: 2050-2055
 Price pulls back from 2075 to 2049
 FVG fully filled (price reached 2049, covering entire zone)
@@ -215,7 +215,7 @@ Implication: Imbalance fully corrected
 
 Price fills only part of the FVG:
 
-```
+```text
 Bullish FVG: 2050-2055
 Price pulls back from 2075 to 2052.5 (middle of FVG)
 FVG 50% filled
@@ -246,7 +246,7 @@ The 50% rule is important: Many FVGs only fill to their midpoint before reversin
 ### FVG + Order Blocks
 
 **Premium Confluence Setup**:
-```
+```text
 Scenario: Pullback in uptrend
 
 H4 Analysis:
@@ -266,7 +266,7 @@ Target: 2096 (3:1 R/R)
 ### FVG + EMA
 
 **Dynamic Support/Resistance**:
-```
+```text
 Scenario: EMA retest setup
 
 H1 Analysis:
@@ -286,7 +286,7 @@ Target: 2081 (3:1 R/R)
 ### FVG + RSI
 
 **Oversold/Overbought at Imbalance**:
-```
+```text
 Scenario: Oversold pullback
 
 Multi-timeframe Analysis:
@@ -311,7 +311,7 @@ Probability: High
 
 The AI analyzes FVGs across all timeframes:
 
-```
+```text
 Scenario: Multi-timeframe FVG alignment
 
 D1: Bullish FVG at 2040-2065 (major imbalance)
@@ -391,7 +391,7 @@ The AI automatically tracks FVG status (active, mitigated, invalidated) and remo
 
 ### Pattern 1: Impulse and Retracement
 
-```
+```text
 Pattern:
 1. Strong impulse move creates FVG
 2. Price continues briefly
@@ -405,7 +405,7 @@ Logic: Retracement to fill imbalance before trend continuation
 
 ### Pattern 2: FVG Clustering
 
-```
+```text
 Pattern:
 1. Multiple FVGs form in close proximity
 2. Creates a "FVG cluster zone"
@@ -418,7 +418,7 @@ Logic: Multiple imbalances = multiple layers of orders
 
 ### Pattern 3: FVG to FVG
 
-```
+```text
 Pattern:
 1. Price at bullish FVG (support)
 2. Target is bearish FVG above (resistance)
@@ -433,7 +433,7 @@ Logic: Price attracted from one imbalance to next
 
 ### Example 1: Perfect FVG Trade
 
-```
+```text
 Setup:
 - H4 bullish FVG at 2052-2057 (unmitigated)
 - Created during NY session
@@ -460,7 +460,7 @@ Result: Price bounced to 2091 (36 pips profit)
 
 ### Example 2: FVG + Order Block Confluence
 
-```
+```text
 Setup:
 - H4 bullish order block: 2048-2053
 - H4 bullish FVG: 2050-2055
@@ -485,7 +485,7 @@ Result: Price exploded to 2095 (44 pips profit)
 
 ### Example 3: Failed FVG (Avoided Loss)
 
-```
+```text
 Setup:
 - M30 bullish FVG at 2065-2068
 - Small gap (3 pips)

@@ -72,7 +72,7 @@ Average True Range (ATR) is a volatility indicator that measures the average pri
 
 The system calculates ATR for all six timeframes:
 
-```
+```text
 D1 ATR:  Used for swing trading positions
 H4 ATR:  Used for day trading positions
 H1 ATR:  Used for intraday trades
@@ -88,13 +88,13 @@ Typical stop-loss placement uses 1.5x to 2x the ATR value from the entry point, 
 </Info>
 
 **For Buy Trades:**
-```
+```text
 Stop Loss = Entry Price - (ATR × Multiplier)
 Multiplier typically = 1.5 to 2.0
 ```
 
 **For Sell Trades:**
-```
+```text
 Stop Loss = Entry Price + (ATR × Multiplier)
 ```
 
@@ -142,7 +142,7 @@ The system recommends multiple take-profit levels for optimal risk-reward:
 
 ### Partial Profit Taking
 
-```
+```text
 TP1: 1.5x risk (1.5:1 RR)
   - Close 50% of position
   - Move stop-loss to breakeven
@@ -153,7 +153,7 @@ TP2: 2.5x risk (2.5:1 RR)
 ```
 
 **Example:**
-```
+```text
 Risk: $100 (stop-loss hit)
 
 TP1: $150 profit (50% of position)
@@ -289,7 +289,7 @@ Use the auto-refresh feature (30-minute intervals) to stay updated on changing m
 - Maximum Drawdown: Limited by position sizing
 
 With these metrics:
-```
+```text
 100 trades:
 - 65 wins × $200 average = $13,000
 - 35 losses × $100 average = $3,500

@@ -15,7 +15,7 @@ Groq provides ultra-fast LLM inference, enabling real-time analysis of complex m
 
 ### Component Stack
 
-```
+```text
 ┌──────────────────────────────────┐
 │     Technical Features Input     │
 │  (Multi-timeframe indicators)    │
@@ -94,7 +94,7 @@ The system constructs prompts that include:
 - **Output Format**: Structured format for signals with entry, SL, and TP levels
 
 Example prompt structure:
-```
+```text
 Analyze the following XAUUSD market data across multiple timeframes:
 
 Daily (D1): [RSI, EMA, ATR, Order Blocks]
@@ -222,7 +222,7 @@ bot = XAUUSDTradingBot(api_key=st.secrets["GROQ_API_KEY"])
 The AI generates three types of signals:
 
 ### Buy Signal
-```
+```text
 Direction: BUY
 Entry: 2045.50
 Stop Loss: 2042.30 (based on ATR)
@@ -235,7 +235,7 @@ order block on M30...
 ```
 
 ### Sell Signal
-```
+```text
 Direction: SELL
 Entry: 2045.50
 Stop Loss: 2048.70 (based on ATR)
@@ -247,7 +247,7 @@ H1 RSI overbought...
 ```
 
 ### Hold Signal
-```
+```text
 Direction: HOLD
 Reasoning: Conflicting signals across timeframes. 
 Daily shows uptrend but H4 and H1 showing 
